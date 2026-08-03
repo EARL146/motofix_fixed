@@ -1749,9 +1749,9 @@ button {
 
 .ranking-scroll {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   overflow-x: auto;
-  padding: 4px 20px 12px;
+  padding: 4px 20px 14px;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch
 }
@@ -1765,123 +1765,209 @@ button {
   border-radius: 3px
 }
 
-.rank-card {
-  flex: 0 0 130px;
+/* ── Unified ranking card (shared by Top Rated, Best Sellers, Top Mechanics) ── */
+.uni-card {
+  flex: 0 0 158px;
   background: var(--bg3);
   border: 1px solid var(--bd);
-  border-radius: 10px;
+  border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
   scroll-snap-align: start;
-  position: relative
+  position: relative;
+  display: flex;
+  flex-direction: column
 }
 
-.rank-card:hover {
+.uni-card:hover {
   border-color: var(--or);
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(238, 77, 45, 0.15)
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(238, 77, 45, 0.14)
 }
 
-.rank-card-img-wrap {
+.uni-card-img {
   position: relative;
   width: 100%;
-  height: 120px;
-  overflow: hidden
+  height: 150px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--bg4)
 }
 
-.rank-card-img-wrap img {
+.uni-card-img img,
+.uni-card-img .uni-card-img-ph {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: top;
   transition: transform 0.3s
 }
 
-.rank-card:hover .rank-card-img-wrap img {
+.uni-card:hover .uni-card-img img {
   transform: scale(1.05)
 }
 
-.rank-badge-num {
+.uni-card-img-ph {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: var(--tx2)
+}
+
+/* rank number badge */
+.uni-rank {
   position: absolute;
-  top: 6px;
-  left: 6px;
-  width: 22px;
-  height: 22px;
+  top: 7px;
+  left: 7px;
+  z-index: 5;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 900;
   color: #fff;
-  z-index: 1
+  line-height: 1
+}
+.uni-rank.gold   { background: linear-gradient(135deg,#f59e0b,#d97706) }
+.uni-rank.silver { background: linear-gradient(135deg,#94a3b8,#64748b) }
+.uni-rank.bronze { background: linear-gradient(135deg,#cd7c45,#a16207) }
+.uni-rank.other  { background: rgba(0,0,0,0.55) }
+.uni-rank.emoji  { background: none; width: auto; height: auto; font-size: 1.35rem; filter: drop-shadow(0 1px 3px rgba(0,0,0,.4)) }
+
+/* availability pill (mechanics) */
+.uni-avail {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  z-index: 5;
+  font-size: 8px;
+  font-weight: 900;
+  padding: 2px 7px;
+  border-radius: 20px;
+  color: #fff
+}
+.uni-avail.on  { background: #22c55e }
+.uni-avail.off { background: #ef4444 }
+
+.uni-card-body {
+  padding: 9px 10px 11px;
+  display: flex;
+  flex-direction: column;
+  flex: 1
 }
 
-.rank-badge-num.gold {
-  background: linear-gradient(135deg, #f59e0b, #d97706)
-}
-
-.rank-badge-num.silver {
-  background: linear-gradient(135deg, #94a3b8, #64748b)
-}
-
-.rank-badge-num.bronze {
-  background: linear-gradient(135deg, #cd7c45, #a16207)
-}
-
-.rank-badge-num.other {
-  background: rgba(0, 0, 0, 0.55)
-}
-
-.rank-card-body {
-  padding: 8px 9px 10px
-}
-
-.rank-card-name {
-  font-size: 0.75rem;
+.uni-card-name {
+  font-size: 0.8rem;
   font-weight: 800;
   color: var(--tx);
   line-height: 1.3;
   display: -webkit-box;
-  -webkit-lineclamp: 2;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  min-height: 2.2em
+  min-height: 2.1em;
+  margin-bottom: 3px
 }
 
-.rank-card-price {
-  font-size: 0.85rem;
-  font-weight: 900;
-  color: var(--or);
-  margin-top: 4px
-}
-
-.rank-card-score {
+.uni-card-sub {
   font-size: 0.7rem;
-  color: var(--tx2);
-  margin-top: 2px;
+  color: var(--or);
+  font-weight: 700;
+  margin-bottom: 4px;
   display: flex;
   align-items: center;
-  gap: 3px
+  gap: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis
 }
 
-.rank-card-score .stars-orange {
-  color: #f59e0b;
-  font-size: 0.65rem
+.uni-card-price {
+  font-size: 0.9rem;
+  font-weight: 900;
+  color: var(--or);
+  margin-bottom: 3px
 }
+
+.uni-card-score {
+  font-size: 0.7rem;
+  color: var(--tx2);
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  margin-bottom: 4px
+}
+
+.uni-card-score .s-or { color: #f59e0b }
+
+.uni-card-meta {
+  font-size: 0.68rem;
+  color: var(--tx2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px
+}
+
+.uni-card-fee {
+  font-size: 0.88rem;
+  font-weight: 900;
+  color: var(--or)
+}
+
+.uni-btn-primary {
+  width: 100%;
+  background: var(--or);
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  padding: 6px 4px;
+  font-weight: 900;
+  font-size: 0.72rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-family: 'Nunito', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin-top: auto
+}
+.uni-btn-primary:hover { background: var(--or2) }
+
+.uni-btn-outline {
+  width: 100%;
+  background: transparent;
+  color: var(--or);
+  border: 1.5px solid var(--or);
+  border-radius: 7px;
+  padding: 5px 4px;
+  font-weight: 800;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  font-family: 'Nunito', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin-top: 4px
+}
+.uni-btn-outline:hover { background: var(--or); color: #fff }
+
+/* legacy aliases — keep old selectors working in case elsewhere */
+.rank-card { display: none }
+.rank-card-img-wrap { display: none }
 
 @media(max-width:640px) {
-  .ranking-section {
-    padding: 14px 0
-  }
-
-  .rank-card {
-    flex: 0 0 120px
-  }
-
-  .rank-card-img-wrap {
-    height: 110px
-  }
+  .ranking-section { padding: 14px 0 }
+  .uni-card { flex: 0 0 148px }
+  .uni-card-img { height: 138px }
 }
 
 .flash-header {
@@ -6408,7 +6494,7 @@ img {
 .mechanics-grid {
   display: flex !important;
   flex-direction: row !important;
-  gap: 14px !important;
+  gap: 12px !important;
   overflow-x: auto !important;
   scroll-snap-type: x mandatory !important;
   padding-bottom: 8px !important;
@@ -6416,14 +6502,36 @@ img {
 }
 .mechanics-grid::-webkit-scrollbar { height: 3px; }
 .mechanics-grid::-webkit-scrollbar-thumb { background: var(--or); border-radius: 3px; }
-.mech-card {
-  flex: 0 0 152px !important;
-  width: 152px !important;
-  min-width: 152px !important;
+.mechanics-grid .uni-card {
+  flex: 0 0 158px !important;
+  min-width: 158px !important;
   scroll-snap-align: start !important;
 }
 @media (min-width: 769px) {
-  .mech-card { flex: 0 0 165px !important; width: 165px !important; min-width: 165px !important; }
+  .mechanics-grid .uni-card { flex: 0 0 172px !important; min-width: 172px !important; }
+}
+/* ===== MECHANICS: full-page grid view (when Mechanics nav is active) ===== */
+.mechanics-grid.page-view {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  overflow-x: unset !important;
+  scroll-snap-type: unset !important;
+  flex-direction: unset !important;
+}
+.mechanics-grid.page-view .uni-card {
+  flex: unset !important;
+  width: 100% !important;
+  min-width: unset !important;
+}
+@media (min-width: 500px) {
+  .mechanics-grid.page-view { grid-template-columns: repeat(3, 1fr) !important; }
+}
+@media (min-width: 769px) {
+  .mechanics-grid.page-view {
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)) !important;
+    gap: 16px !important;
+  }
+  .mechanics-grid.page-view .uni-card { flex: unset !important; width: 100% !important; min-width: unset !important; }
 }
 
 /* ===== PRODUCTS: 5-col on large desktop ===== */
@@ -6775,7 +6883,7 @@ img {
 
 /* ---- Top Mechanics ---- */
 [data-theme="light"] .mechanics-section{ background:var(--bg) !important; }
-[data-theme="light"] .mech-card{
+[data-theme="light"] .uni-card{
   background:var(--bg2);
   border:1px solid var(--bd);
   border-radius:var(--radius-md);
@@ -6783,14 +6891,13 @@ img {
   transition:transform .22s ease, box-shadow .22s ease;
   overflow:hidden;
 }
-[data-theme="light"] .mech-card:hover{
+[data-theme="light"] .uni-card:hover{
   transform:translateY(-6px);
   box-shadow:var(--shadow-lg);
 }
-[data-theme="light"] .mech-card-img,
-[data-theme="light"] .mech-card-img-placeholder{ border-radius:var(--radius-md) var(--radius-md) 0 0; }
-[data-theme="light"] .mech-card-name{ font-weight:900; }
-[data-theme="light"] .mech-card-fee{ color:var(--or); font-weight:900; }
+[data-theme="light"] .uni-card-img{ border-radius:var(--radius-md) var(--radius-md) 0 0; }
+[data-theme="light"] .uni-card-name{ font-weight:900; }
+[data-theme="light"] .uni-card-fee{ color:var(--or); font-weight:900; }
 
 /* ---- Popular brands strip ---- */
 .brand-strip{
@@ -6849,7 +6956,7 @@ img {
 
 /* ---- Smooth hover animation baseline ---- */
 [data-theme="light"] a, [data-theme="light"] button, [data-theme="light"] .prod-card,
-[data-theme="light"] .mech-card, [data-theme="light"] .cat-icon-item, [data-theme="light"] .mini-banner{
+[data-theme="light"] .uni-card, [data-theme="light"] .cat-icon-item, [data-theme="light"] .mini-banner{
   transition-timing-function: ease;
 }
 
@@ -8498,6 +8605,8 @@ function filterCat(cat,el){
   currentCat=cat;
   document.querySelectorAll('.catnav-link').forEach(a=>a.classList.remove('active'));
   if(el)el.classList.add('active');
+  // Restore all sections (in case mechanics-only view was active)
+  if(typeof showProductsView==='function') showProductsView();
   document.getElementById('mechanicsSection').style.display='';
   document.getElementById('productsSection').style.display='';
   document.getElementById('sectionTitle').textContent=cat==='All'?t('all_products'):cat;
@@ -8535,105 +8644,107 @@ function renderRanking(){
   const list    = document.getElementById('rankingList');
   if(!section || !list) return;
 
-  // ── MECHANICS TAB ──────────────────────────────
+  // ── shared badge helpers ──────────────────────────────────────────
+  const MEDALS = ['🥇','🥈','🥉'];
+  const RANK_CLS = ['gold','silver','bronze'];
+
+  function rankBadge(i){
+    if(i < 3) return `<div class="uni-rank emoji">${MEDALS[i]}</div>`;
+    return `<div class="uni-rank other">${i+1}</div>`;
+  }
+
+  // ── MECHANICS TAB ─────────────────────────────────────────────────
   if(_rankTab === 'mechanics'){
     section.style.display = '';
     if(!MECHANICS_LOCAL || !MECHANICS_LOCAL.length){
       list.innerHTML = '<div style="padding:20px;color:var(--tx2);font-size:13px;">No mechanics yet.</div>';
       return;
     }
-    const medals = ['🥇','🥈','🥉'];
     const sorted = [...MECHANICS_LOCAL]
       .sort((a,b) => (parseInt(b.jobs||b._jobs||0)-parseInt(a.jobs||a._jobs||0)) || (parseFloat(b.rating||0)-parseFloat(a.rating||0)))
       .slice(0,10);
     list.innerHTML = sorted.map((m,i)=>{
       const r = parseFloat(m.rating||0);
-      const stars = [...Array(5)].map((_,s)=>`<span style="color:${s<Math.round(r)?'#f59e0b':'#d1d5db'};font-size:10px">★</span>`).join('');
-      const medal = medals[i] || `<span style="background:rgba(0,0,0,.5);color:#fff;font-size:9px;font-weight:900;padding:1px 5px;border-radius:8px">#${i+1}</span>`;
+      const stars = [1,2,3,4,5].map(s=>`<i class="fa${s<=Math.round(r)?'s':'r'} fa-star" style="color:${s<=Math.round(r)?'#f59e0b':'var(--bd)'}"></i>`).join('');
       const _mPhoto = m.photo ? (/^(https?:\/\/|data:)/.test(m.photo) ? m.photo : (m.photo.startsWith('/') ? m.photo : '/images/'+m.photo)) : '';
       const imgHtml = _mPhoto
-        ? `<img src="${_mPhoto}" style="width:100%;height:100%;object-fit:cover;object-position:top;" onerror="this.outerHTML='<div style=\'width:100%;height:100%;background:var(--bg4);display:flex;align-items:center;justify-content:center;font-size:2rem;\'><i class=\'fas fa-user-gear\'></i></div>'"/>`
-        : `<div style="width:100%;height:100%;background:var(--bg4);display:flex;align-items:center;justify-content:center;font-size:2rem;color:var(--tx2)"><i class="fas fa-user-gear"></i></div>`;
-      return `<div class="rank-card" style="cursor:pointer">
-        <div class="rank-card-img-wrap" style="position:relative" onclick="bookMechanic(${m.id})">
+        ? `<img src="${_mPhoto}" alt="${m.name}" onerror="this.outerHTML='<div class=uni-card-img-ph><i class=\\'fas fa-user-gear\\'></i></div>'">`
+        : `<div class="uni-card-img-ph"><i class="fas fa-user-gear"></i></div>`;
+      const availCls = m.available ? 'on' : 'off';
+      const availTxt = m.available ? '● Available' : '● Busy';
+      return `<div class="uni-card" onclick="bookMechanic(${m.id})">
+        <div class="uni-card-img">
           ${imgHtml}
-          <div style="position:absolute;top:6px;left:6px;font-size:${i<3?'1.3rem':'0.75rem'};line-height:1;filter:drop-shadow(0 1px 3px rgba(0,0,0,.5))">${medal}</div>
-          <div style="position:absolute;top:6px;right:6px;background:${m.available?'#22c55e':'#ef4444'};color:#fff;font-size:8px;font-weight:900;padding:2px 5px;border-radius:8px">${m.available?'✓ Available':'● Busy'}</div>
+          ${rankBadge(i)}
+          <span class="uni-avail ${availCls}">${availTxt}</span>
         </div>
-        <div class="rank-card-body">
-          <div class="rank-card-name" onclick="bookMechanic(${m.id})">${m.name}</div>
-          <div style="font-size:0.68rem;color:var(--or);font-weight:700;margin-bottom:2px">${m.specialty||'General'}</div>
-          <div class="rank-card-score">${stars} <span style="color:var(--tx2);font-size:0.68rem">${r>0?r.toFixed(1):'—'}</span></div>
-          <div style="font-size:0.78rem;font-weight:900;color:var(--or);margin-top:3px">₱${parseFloat(m.fee||0).toLocaleString()}</div>
-          <button onclick="openMechReviewModal(${m.id})" style="width:100%;margin-top:6px;background:transparent;color:var(--or);border:1.5px solid var(--or);border-radius:6px;padding:4px 0;font-size:0.7rem;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;display:flex;align-items:center;justify-content:center;gap:4px"><i class="fas fa-star" style="font-size:0.65rem"></i> Rate & Reviews</button>
+        <div class="uni-card-body">
+          <div class="uni-card-name">${m.name}</div>
+          <div class="uni-card-sub"><i class="fas fa-wrench" style="font-size:0.65rem"></i>${m.specialty||'General'}</div>
+          <div class="uni-card-score"><span class="s-or">${stars}</span> <span>${r>0?r.toFixed(1):'—'}</span></div>
+          <div class="uni-card-meta">
+            <span><i class="fas fa-briefcase" style="opacity:.55;margin-right:2px"></i>${m.experience||m.experience_years||0} yrs</span>
+            <span class="uni-card-fee">₱${parseFloat(m.fee||0).toLocaleString()}</span>
+          </div>
+          <button class="uni-btn-primary" onclick="event.stopPropagation();bookMechanic(${m.id})"><i class="fas fa-calendar-check"></i> Book Now</button>
+          <button class="uni-btn-outline" onclick="event.stopPropagation();openMechReviewModal(${m.id})"><i class="fas fa-star"></i> Rate & Reviews</button>
         </div>
       </div>`;
     }).join('');
     return;
   }
 
-  if(!PRODUCTS.length) return;
+  // ── PRODUCTS TABS (Top Rated / Best Sellers) ──────────────────────
+  if(!PRODUCTS.length){
+    setTimeout(()=>{ if(typeof renderRanking==='function') renderRanking(); }, 600);
+    return;
+  }
 
-  const _notSvc=p=>{var c=(p.cat||p.category||'').toLowerCase().trim();return c!=='service'&&c!=='services';};
-  // Get top 10 based on current tab
+  const _notSvc = p => { var c=(p.cat||p.category||'').toLowerCase().trim(); return c!=='service'&&c!=='services'; };
   let sorted;
   if(_rankTab === 'rated'){
-    sorted = [...PRODUCTS]
-      .filter(_notSvc)
-      .sort((a,b) => {
-        // Use live avg from _reviews if available, else p.rating
-        const rA = getLiveRating(a);
-        const rB = getLiveRating(b);
-        return rB - rA || b.sold - a.sold; // tiebreak by sold
-      })
+    sorted = [...PRODUCTS].filter(_notSvc)
+      .sort((a,b) => { const rA=getLiveRating(a), rB=getLiveRating(b); return rB-rA || b.sold-a.sold; })
       .slice(0,10);
   } else {
-    sorted = [...PRODUCTS]
-      .filter(_notSvc)
-      .sort((a,b) => b.sold - a.sold || getLiveRating(b) - getLiveRating(a))
+    sorted = [...PRODUCTS].filter(_notSvc)
+      .sort((a,b) => b.sold-a.sold || getLiveRating(b)-getLiveRating(a))
       .slice(0,10);
   }
 
   if(!sorted.length){
-    // Products not loaded yet - retry after delay instead of hiding
     setTimeout(()=>{ if(typeof renderRanking==='function') renderRanking(); }, 600);
     return;
   }
   section.style.display = 'block';
-
-  const numClass = ['gold','silver','bronze'];
-  const numLabel = ['1','2','3'];
 
   list.innerHTML = sorted.map((p,i) => {
     const liveRating = getLiveRating(p);
     const sale = typeof fsCustomerGetSaleForProduct==='function' ? fsCustomerGetSaleForProduct(p.id) : null;
     const dispPrice = sale ? Math.round((p.orig||p.price)*(1-sale.discPct/100)) : p.price;
     const _rawImg = p.img || p.image_url || '';
-    const imgSrc = _rawImg && /^(https?:\/\/|\/|data:)/.test(_rawImg) ? _rawImg : (_rawImg ? '/images/'+_rawImg : 'https://placehold.co/130x120/111827/ee4d2d?text=P');
-    const numCls = numClass[i]||'other';
-    const numTxt = numLabel[i]||(i+1);
+    const imgSrc = _rawImg && /^(https?:\/\/|\/|data:)/.test(_rawImg) ? _rawImg : (_rawImg ? '/images/'+_rawImg : 'https://placehold.co/158x150/111827/ee4d2d?text=P');
+    const rankCls = RANK_CLS[i] || 'other';
 
-    // Score row: stars for rated, sold count for sellers
     const scoreRow = _rankTab==='rated'
       ? (liveRating > 0
-          ? `<span class="stars-orange">${[1,2,3,4,5].map(s=>`<i class="fa${s<=Math.floor(liveRating)?'s':'r'} fa-star"></i>`).join('')}</span> ${liveRating.toFixed(1)}`
-          : `<span style="color:var(--tx2);font-size:0.7rem"><i class="far fa-star"></i> No reviews yet</span>`)
-      : `<i class="fas fa-fire" style="color:#ef4444;font-size:0.65rem"></i> ${p.sold.toLocaleString()} sold`;
+          ? `<span class="s-or">${[1,2,3,4,5].map(s=>`<i class="fa${s<=Math.floor(liveRating)?'s':'r'} fa-star" style="color:${s<=Math.floor(liveRating)?'#f59e0b':'var(--bd)'}"></i>`).join('')}</span> ${liveRating.toFixed(1)}`
+          : `<span style="color:var(--tx2)"><i class="far fa-star"></i> No reviews yet</span>`)
+      : `<i class="fas fa-fire" style="color:#ef4444"></i> ${p.sold.toLocaleString()} sold`;
 
-    return `<div class="rank-card" onclick="openModal(${p.id})">
-      <div class="rank-card-img-wrap">
-        <img src="${imgSrc}" alt="${p.name}" loading="lazy" onerror="this.src='https://placehold.co/130x120/111827/ee4d2d?text=P'"/>
-        <div class="rank-badge-num ${numCls}">${numTxt}</div>
+    return `<div class="uni-card" onclick="openModal(${p.id})">
+      <div class="uni-card-img">
+        <img src="${imgSrc}" alt="${p.name}" loading="lazy" onerror="this.src='https://placehold.co/158x150/111827/ee4d2d?text=P'"/>
+        <div class="uni-rank ${rankCls}">${i<3?(i+1):(i+1)}</div>
       </div>
-      <div class="rank-card-body">
-        <div class="rank-card-name">${p.name}</div>
-        <div class="rank-card-price">₱${dispPrice.toLocaleString()}</div>
-        <div class="rank-card-score">${scoreRow}</div>
+      <div class="uni-card-body">
+        <div class="uni-card-name">${p.name}</div>
+        <div class="uni-card-price">₱${dispPrice.toLocaleString()}</div>
+        <div class="uni-card-score">${scoreRow}</div>
       </div>
     </div>`;
   }).join('');
 }
-
 function getLiveRating(p){
   const revs = _reviews[p.id]||[];
   // If we have locally-loaded reviews (from modal open), compute avg from those
@@ -12018,49 +12129,74 @@ function showToast(msg){const t=document.getElementById('toast');t.textContent=m
 
 function openMechanicsPage(el){
   document.querySelectorAll('.catnav-link').forEach(a=>a.classList.remove('active'));if(el)el.classList.add('active');
-  document.getElementById('mechanicsSection').style.display='';
-  document.getElementById('productsSection').style.display='';
-  document.getElementById('mechanicsSection').scrollIntoView({behavior:'smooth'});renderMechanicsGrid();
+  // Hide products, ranking & flash sections — show only mechanics
+  const prodSec = document.getElementById('productsSection');
+  const rankSec = document.getElementById('rankingSection');
+  const flashSec = document.querySelector('.flash-section');
+  const catSec = document.querySelector('.cat-section');
+  if(prodSec) prodSec.style.display='none';
+  if(rankSec) rankSec.style.display='none';
+  if(flashSec) flashSec.style.display='none';
+  if(catSec) catSec.style.display='none';
+  const mechSec = document.getElementById('mechanicsSection');
+  mechSec.style.display='';
+  // Switch mechanics grid to full page grid layout
+  const grid = document.getElementById('mechanicsGrid');
+  if(grid) grid.classList.add('page-view');
+  mechSec.scrollIntoView({behavior:'smooth'});
+  renderMechanicsGrid();
+}
+
+function showProductsView(){
+  // Restore all sections hidden by openMechanicsPage
+  const prodSec = document.getElementById('productsSection');
+  const rankSec = document.getElementById('rankingSection');
+  const flashSec = document.querySelector('.flash-section');
+  const catSec = document.querySelector('.cat-section');
+  if(prodSec) prodSec.style.display='';
+  if(rankSec) rankSec.style.display='';
+  if(flashSec) flashSec.style.display='';
+  if(catSec) catSec.style.display='';
+  // Restore horizontal scroll layout for mechanics grid
+  const grid = document.getElementById('mechanicsGrid');
+  if(grid) grid.classList.remove('page-view');
 }
 
 function renderMechanicsGrid(){
   const grid=document.getElementById('mechanicsGrid');
   if(!MECHANICS_LOCAL.length){grid.innerHTML='<div style="color:var(--tx2);padding:20px;grid-column:1/-1">No mechanics available yet.</div>';return;}
 
-  // Sort by jobs (from orders) + rating for ranking
+  const MEDALS=['🥇','🥈','🥉'];
   const sorted=[...MECHANICS_LOCAL].sort((a,b)=>(parseInt(b.jobs||b._jobs||0)-parseInt(a.jobs||a._jobs||0))||(parseFloat(b.rating||0)-parseFloat(a.rating||0)));
-  const medals=['🥇','🥈','🥉'];
-  const rankColors=['#f59e0b','#94a3b8','#cd7c45'];
 
-  grid.innerHTML=sorted.map((m,rankIdx)=>{
-    const imgHtml=m.photo?`<img src="${/^(https?:\/\/|data:)/.test(m.photo)?m.photo:(m.photo.startsWith('/')?m.photo:'/images/'+m.photo)}" class="mech-card-img" alt="${m.name}" onerror="this.outerHTML='<div class=mech-card-img-placeholder><i class=\'fas fa-user-gear\'></i></div>'">`:`<div class="mech-card-img-placeholder"><i class="fas fa-user-gear"></i></div>`;
+  grid.innerHTML=sorted.map((m,i)=>{
     const r=parseFloat(m.rating||0);
-    const stars=[...Array(5)].map((_,i)=>`<span style="color:${i<Math.round(r)?'#f59e0b':'#d1d5db'}">★</span>`).join('');
-    // Rank badge — show medal for top 3, number for 4-10
-    const rankBadge = rankIdx<10 ? (
-      rankIdx<3
-        ? `<div style="position:absolute;top:7px;left:7px;z-index:5;font-size:1.4rem;line-height:1;filter:drop-shadow(0 1px 3px rgba(0,0,0,.4))">${medals[rankIdx]}</div>`
-        : `<div style="position:absolute;top:7px;left:7px;z-index:5;background:rgba(0,0,0,.65);color:#fff;font-size:10px;font-weight:900;padding:2px 6px;border-radius:10px;line-height:1.4">#${rankIdx+1}</div>`
-    ) : '';
-    const availBadge=m.available
-      ?`<span style="position:absolute;top:7px;right:7px;z-index:5;background:#22c55e;color:#fff;font-size:9px;font-weight:800;padding:2px 7px;border-radius:10px;">● Available</span>`
-      :`<span style="position:absolute;top:7px;right:7px;z-index:5;background:#ef4444;color:#fff;font-size:9px;font-weight:800;padding:2px 7px;border-radius:10px;">● Busy</span>`;
-    return`<div class="mech-card" onclick="bookMechanic(${m.id})">
-      <div style="position:relative;overflow:hidden">
+    const stars=[1,2,3,4,5].map(s=>`<i class="fa${s<=Math.round(r)?'s':'r'} fa-star" style="color:${s<=Math.round(r)?'#f59e0b':'var(--bd)'}"></i>`).join('');
+    const _mPhoto=m.photo?(/^(https?:\/\/|data:)/.test(m.photo)?m.photo:(m.photo.startsWith('/')?m.photo:'/images/'+m.photo)):'';
+    const imgHtml=_mPhoto
+      ?`<img src="${_mPhoto}" alt="${m.name}" onerror="this.outerHTML='<div class=uni-card-img-ph><i class=\'fas fa-user-gear\'></i></div>'">`
+      :`<div class="uni-card-img-ph"><i class="fas fa-user-gear"></i></div>`;
+    const rankBadge=i<3
+      ?`<div class="uni-rank emoji">${MEDALS[i]}</div>`
+      :`<div class="uni-rank other">${i+1}</div>`;
+    const availCls=m.available?'on':'off';
+    const availTxt=m.available?'● Available':'● Busy';
+    return`<div class="uni-card" onclick="bookMechanic(${m.id})">
+      <div class="uni-card-img">
         ${imgHtml}
         ${rankBadge}
-        ${availBadge}
+        <span class="uni-avail ${availCls}">${availTxt}</span>
       </div>
-      <div class="mech-card-body">
-        <div class="mech-card-name">${m.name}</div>
-        <div class="mech-card-specialty"><i class="fas fa-wrench" style="font-size:0.7rem"></i>${m.specialty||'General'}</div>
-        <div style="font-size:0.72rem;margin-bottom:5px;">${stars} <span style="color:var(--tx2)">${r>0?r.toFixed(1):'No rating yet'}</span></div>
-        <div class="mech-card-meta">
-          <span><i class="fas fa-briefcase" style="margin-right:3px;opacity:.6"></i>${m.experience||m.experience_years||0} yrs exp</span>
-          <span class="mech-card-fee">₱${parseFloat(m.fee||0).toLocaleString()}</span>
+      <div class="uni-card-body">
+        <div class="uni-card-name">${m.name}</div>
+        <div class="uni-card-sub"><i class="fas fa-wrench" style="font-size:0.65rem"></i>${m.specialty||'General'}</div>
+        <div class="uni-card-score"><span class="s-or">${stars}</span> <span>${r>0?r.toFixed(1):'—'}</span></div>
+        <div class="uni-card-meta">
+          <span><i class="fas fa-briefcase" style="opacity:.55;margin-right:2px"></i>${m.experience||m.experience_years||0} yrs</span>
+          <span class="uni-card-fee">₱${parseFloat(m.fee||0).toLocaleString()}</span>
         </div>
-        <button class="mech-book-btn"><i class="fas fa-calendar-check"></i> Book Now</button>
-        <button class="mech-review-btn" onclick="event.stopPropagation();openMechReviewModal(${m.id})"><i class="fas fa-star"></i> Rate & Reviews</button>
+        <button class="uni-btn-primary" onclick="event.stopPropagation();bookMechanic(${m.id})"><i class="fas fa-calendar-check"></i> Book Now</button>
+        <button class="uni-btn-outline" onclick="event.stopPropagation();openMechReviewModal(${m.id})"><i class="fas fa-star"></i> Rate & Reviews</button>
       </div>
     </div>`;
   }).join('');

@@ -2290,6 +2290,66 @@ async function sendAdminNotification() {
   }
 }
 
+
+/* --- Open Send Message to feedback customer --- */
+let _fbMsgTargetIdx = -1;
+function openSendMsgToCustomer(fbIdx) {
+  _fbMsgTargetIdx = fbIdx;
+  const f = feedbackList[fbIdx];
+  if (!f) return;
+  const sel = document.getElementById('notify-recipient');
+  const titleEl = document.getElementById('notify-title');
+  const msgEl = document.getElementById('notify-message');
+  if (sel && f._customerId) {
+    for (let i = 0; i < sel.options.length; i++) {
+      if (sel.options[i].value == f._customerId) { sel.value = f._customerId; break; }
+    }
+  }
+  const templates = {
+    Complaint: 'Regarding your complaint — ' + (f.subject||'').substring(0,40),
+    Feedback:  'Thank you for your feedback!',
+    Request:   'Update on your request — ' + (f.subject||'').substring(0,40),
+  };
+  if (titleEl) titleEl.value = templates[f.type] || 'Message from MotoFix';
+  if (msgEl) msgEl.value = f.admin_response
+    ? 'Hi ' + f.name.split(' ')[0] + ', ' + f.admin_response
+    : 'Hi ' + f.name.split(' ')[0] + ', thank you for reaching out to us. ';
+  const modalTitle = document.querySelector('#mod-notify .mt');
+  if (modalTitle) modalTitle.textContent = '📨 Send Message to ' + f.name;
+  openMod('mod-notify');
+  if (typeof loadNotifyCustomers === 'function') loadNotifyCustomers();
+}
+
+/* --- Toggle feedback message history panel --- */
+function toggleFbHistory(idx) {
+  const panel = document.getElementById('fbhist-' + idx);
+  if (!panel) return;
+  panel.style.display = panel.style.display === 'none' ? '' : 'none';
+}
+
+/* --- Wrap sendAdminNotification to save history --- */
+const _origSend = sendAdminNotification;
+sendAdminNotification = async function() {
+  const title = (document.getElementById('notify-title')||{}).value||'';
+  const message = (document.getElementById('notify-message')||{}).value||'';
+  if (_fbMsgTargetIdx >= 0 && title && message) {
+    const f = feedbackList[_fbMsgTargetIdx];
+    if (f) {
+      const histKey = 'fbmsg_' + (f._id||f.id);
+      const existing = JSON.parse(localStorage.getItem(histKey)||'[]');
+      existing.push({ title, message, sentAt: new Date().toLocaleString('en-PH',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}) });
+      localStorage.setItem(histKey, JSON.stringify(existing));
+      const targetIdx = _fbMsgTargetIdx;
+      _fbMsgTargetIdx = -1;
+      await _origSend();
+      renderFeedback(curFbFilter);
+      return;
+    }
+  }
+  _fbMsgTargetIdx = -1;
+  await _origSend();
+};
+
 async function removeAdminCartItem(orderId, btn) {
   if (!confirm('Remove this order from cart?')) return;
   try {
@@ -4188,31 +4248,55 @@ function renderFeedback(type='all'){
   selectedFeedback.clear();
   const filtered=type==='all'?feedbackList:feedbackList.filter(f=>(f.type||'').toLowerCase()===type.toLowerCase());
   if(!filtered.length){list.innerHTML='<div class="card" style="text-align:center;padding:40px;color:var(--mut);">No entries found.</div>';return;}
-  const ti={Complaint:'😠',Feedback:'💬',Request:'📋'};
+  const ti={Complaint:'&#x1F620;',Feedback:'&#x1F4AC;',Request:'&#x1F4CB;'};
   const tc={Complaint:'br2',Feedback:'bb2',Request:'by2'};
   const pc2={High:'#ef4444',Medium:'#f59e0b',Low:'#22c55e'};
   const sc2={Open:'br2','In Review':'by2',Resolved:'bg2'};
   list.innerHTML=filtered.map(f=>{
     const realIdx=feedbackList.indexOf(f);
-    return '<div class="card" style="padding:16px;transition:box-shadow .2s;" onmouseover="this.style.boxShadow=\'var(--sh2)\'" onmouseout="this.style.boxShadow=\'var(--sh)\'">'
-      +'<div style="display:flex;align-items:flex-start;gap:12px;">'
-        +'<input type="checkbox" data-fidx="'+realIdx+'" onchange="toggleFbSelect(this)" style="margin-top:4px;width:16px;height:16px;cursor:pointer;accent-color:var(--p);flex-shrink:0;">'
-        +'<div style="width:44px;height:44px;border-radius:11px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">'+ti[f.type]+'</div>'
-        +'<div style="flex:1;min-width:0;">'
-          +'<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px;">'
-            +'<span style="font-family:var(--fh);font-size:14px;font-weight:800;color:var(--dark);">'+( f.subject && f.subject!=='NA' && f.subject.trim() ? f.subject : (f.message?f.message.substring(0,50)+'…':'(No subject)') )+'</span>'
-            +'<span class="b '+tc[f.type]+'">'+f.type+'</span>'
-            +'<span class="b '+sc2[f.status]+'">'+f.status+'</span>'
-            +(f.priority&&f.priority!=='undefined'?'<span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;color:'+pc2[f.priority||'Medium']+';">● '+(f.priority||'Medium')+'</span>':'')
+    const histKey='fbmsg_'+(f._id||f.id);
+    const savedMsgs=JSON.parse(localStorage.getItem(histKey)||'[]');
+    const histHtml=savedMsgs.length
+      ?savedMsgs.slice().reverse().map(m=>'<div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;">'
+          +'<div style="width:28px;height:28px;border-radius:50%;background:var(--p);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;flex-shrink:0;">A</div>'
+          +'<div style="flex:1;background:var(--bg);border:1px solid var(--bdr);border-radius:10px;padding:8px 10px;">'
+            +'<div style="font-size:11px;font-weight:800;color:var(--p);margin-bottom:2px;">&#x1F4E3; '+m.title+'</div>'
+            +'<div style="font-size:12px;color:var(--txt);line-height:1.5;">'+m.message+'</div>'
+            +'<div style="font-size:10px;color:var(--mut);margin-top:4px;">'+m.sentAt+'</div>'
           +'</div>'
-          +'<div style="font-size:12px;color:var(--mut);margin-bottom:6px;">'+f.name+' · '+(f.phone||'No contact')+' · '+f.date+'</div>'
-          +'<div style="font-size:13px;color:var(--txt);line-height:1.5;">'+f.message+'</div>'
+        +'</div>').join('')
+      :'<div style="font-size:12px;color:var(--mut);text-align:center;padding:10px 0;">No messages sent yet.</div>';
+    return '<div class="card fb-card" style="padding:0;transition:box-shadow .2s;" onmouseover="this.style.boxShadow=\'var(--sh2)\'" onmouseout="this.style.boxShadow=\'var(--sh)\'">'
+      +'<div style="padding:16px;">'
+        +'<div style="display:flex;align-items:flex-start;gap:12px;">'
+          +'<input type="checkbox" data-fidx="'+realIdx+'" onchange="toggleFbSelect(this)" style="margin-top:4px;width:16px;height:16px;cursor:pointer;accent-color:var(--p);flex-shrink:0;">'
+          +'<div style="width:44px;height:44px;border-radius:11px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">'+ti[f.type]+'</div>'
+          +'<div style="flex:1;min-width:0;">'
+            +'<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px;">'
+              +'<span style="font-family:var(--fh);font-size:14px;font-weight:800;color:var(--dark);">'+(f.subject&&f.subject!=='NA'&&f.subject.trim()?f.subject:(f.message?f.message.substring(0,50)+'\u2026':'(No subject)'))+'</span>'
+              +'<span class="b '+tc[f.type]+'">'+f.type+'</span>'
+              +'<span class="b '+sc2[f.status]+'">'+f.status+'</span>'
+              +(f.priority&&f.priority!=='undefined'?'<span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;color:'+(pc2[f.priority||'Medium'])+';">&bull; '+(f.priority||'Medium')+'</span>':'')
+            +'</div>'
+            +'<div style="font-size:12px;color:var(--mut);margin-bottom:6px;">'+f.name+' &middot; '+(f.phone||'No contact')+' &middot; '+f.date+'</div>'
+            +'<div style="font-size:13px;color:var(--txt);line-height:1.5;">'+f.message+'</div>'
+            +(f.admin_response?'<div style="margin-top:8px;padding:8px 10px;background:rgba(238,77,45,.07);border-left:3px solid var(--p);border-radius:0 8px 8px 0;font-size:12px;color:var(--txt);"><span style="font-weight:800;color:var(--p);font-size:11px;">ADMIN RESPONSE: </span>'+f.admin_response+'</div>':'')
+          +'</div>'
+          +'<div style="display:flex;flex-direction:column;gap:5px;flex-shrink:0;">'
+            +'<button class="btn bo bsm" onclick="editFeedback('+realIdx+')">&#x270F;&#xFE0F; Edit</button>'
+            +'<button class="btn bd bsm" onclick="deleteFeedback('+realIdx+')">&#x1F5D1; Delete</button>'
+            +(f.status!=='Resolved'?'<button class="btn bs bsm" onclick="resolveFeedback('+realIdx+')">&#x2705; Resolve</button>':'')
+            +'<button class="btn bsm" style="background:var(--p);color:#fff;border:none;border-radius:7px;" onclick="openSendMsgToCustomer('+realIdx+')">&#x1F4E8; Message</button>'
+            +'<button class="btn bo bsm" onclick="toggleFbHistory('+realIdx+')" id="fbhist-btn-'+realIdx+'">&#x1F4DC; History'+(savedMsgs.length?'<span style=\'margin-left:4px;background:var(--p);color:#fff;border-radius:50%;padding:0 5px;font-size:10px;\'>'+savedMsgs.length+'</span>':'')+'</button>'
+          +'</div>'
         +'</div>'
-        +'<div style="display:flex;flex-direction:column;gap:5px;flex-shrink:0;">'
-          +'<button class="btn bo bsm" onclick="editFeedback('+realIdx+')">✏️ Edit</button>'
-          +'<button class="btn bd bsm" onclick="deleteFeedback('+realIdx+')">🗑 Delete</button>'
-          +(f.status!=='Resolved'?'<button class="btn bs bsm" onclick="resolveFeedback('+realIdx+')">✅ Resolve</button>':'')
+      +'</div>'
+      +'<div id="fbhist-'+realIdx+'" style="display:none;border-top:1px solid var(--bdr);padding:14px 16px;">'
+        +'<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">'
+          +'<div style="font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.07em;color:var(--mut);">&#x1F4E8; Message History &mdash; '+f.name+'</div>'
+          +(f._id?'<button class="btn bp bsm" onclick="openSendMsgToCustomer('+realIdx+')">+ New Message</button>':'')
         +'</div>'
+        +'<div id="fbhist-msgs-'+realIdx+'" style="max-height:260px;overflow-y:auto;">'+histHtml+'</div>'
       +'</div>'
     +'</div>';
   }).join('');

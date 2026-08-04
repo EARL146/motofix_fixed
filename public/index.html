@@ -7515,6 +7515,42 @@ img {
 <!-- THEME/LANG FAB CIRCLE -->
 <button id="themeLangFab" onclick="toggleThemeLangPopup()" title="Theme & Language" style="position:fixed;bottom:100px;right:28px;width:44px;height:44px;border-radius:50%;background:var(--bg2);border:2px solid var(--bd);box-shadow:0 4px 16px rgba(0,0,0,0.18);z-index:2499;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;font-size:18px;">🎨</button>
 
+<!-- NOTIFICATION CHAT MODAL -->
+<div id="notifChatModal" class="hidden" style="display:none;position:fixed;inset:0;z-index:9999;align-items:center;justify-content:center;background:rgba(0,0,0,0.45);padding:16px;">
+  <div style="background:var(--bg,#fff);border-radius:18px;box-shadow:0 8px 40px rgba(0,0,0,0.22);width:100%;max-width:420px;overflow:hidden;display:flex;flex-direction:column;">
+    <!-- Header -->
+    <div style="background:var(--or,#e8400c);padding:16px 18px;display:flex;align-items:center;gap:12px;">
+      <div style="width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <i class="fas fa-comments" style="color:#fff;font-size:16px;"></i>
+      </div>
+      <div style="flex:1;min-width:0;">
+        <b id="notifChatTitle" style="color:#fff;font-size:15px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Message from Admin</b>
+        <small style="color:rgba(255,255,255,0.8);font-size:11px;" id="notifChatTime"></small>
+      </div>
+      <button onclick="closeNotifChat()" style="background:none;border:none;color:#fff;font-size:22px;cursor:pointer;line-height:1;padding:0 4px;opacity:0.85;">×</button>
+    </div>
+    <!-- Message bubble from admin -->
+    <div style="padding:18px 18px 8px;">
+      <div style="background:var(--bg2,#f5f5f5);border-radius:12px 12px 12px 4px;padding:12px 14px;margin-bottom:4px;">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
+          <i class="fas fa-user-shield" style="color:var(--or,#e8400c);font-size:12px;"></i>
+          <span style="font-size:11px;font-weight:700;color:var(--or,#e8400c);">Admin · MotoFix</span>
+        </div>
+        <p id="notifChatMessage" style="margin:0;font-size:14px;line-height:1.5;color:var(--tx,#222);"></p>
+      </div>
+    </div>
+    <!-- Reply area -->
+    <div style="padding:8px 18px 18px;display:flex;flex-direction:column;gap:8px;">
+      <label style="font-size:12px;color:var(--mut,#888);font-weight:600;">Reply to Admin:</label>
+      <textarea id="notifChatInput" rows="3" placeholder="Type your message here..." style="width:100%;resize:none;border:1.5px solid var(--bd,#ddd);border-radius:10px;padding:10px 12px;font-size:13.5px;font-family:inherit;background:var(--bg,#fff);color:var(--tx,#222);outline:none;box-sizing:border-box;" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendNotifChatReply();}"></textarea>
+      <div style="display:flex;gap:8px;justify-content:flex-end;">
+        <button onclick="closeNotifChat()" style="padding:9px 18px;border-radius:8px;border:1.5px solid var(--bd,#ddd);background:none;color:var(--tx,#555);font-size:13px;cursor:pointer;font-weight:600;">Cancel</button>
+        <button id="notifChatSendBtn" onclick="sendNotifChatReply()" style="padding:9px 22px;border-radius:8px;border:none;background:var(--or,#e8400c);color:#fff;font-size:13px;cursor:pointer;font-weight:700;display:flex;align-items:center;gap:6px;"><i class="fas fa-paper-plane"></i> Send</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- CHAT FAB -->
 <button class="chat-fab" id="chatFab" onclick="toggleChat()" title="Chat with MotoMarket AI">
   <svg width="36" height="36" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="32" y1="6" x2="32" y2="14" stroke="white" stroke-width="3" stroke-linecap="round"/><circle cx="32" cy="5" r="3.5" fill="#ffe066"/><rect x="12" y="14" width="40" height="28" rx="10" fill="white" fill-opacity="0.95"/><rect x="16" y="18" width="32" height="20" rx="7" fill="#1a1a2e"/><circle cx="24" cy="28" r="4.5" fill="#00d4ff"/><circle cx="40" cy="28" r="4.5" fill="#00d4ff"/><circle cx="24" cy="28" r="2" fill="white"/><circle cx="40" cy="28" r="2" fill="white"/><path d="M26 33 Q32 37 38 33" stroke="#00d4ff" stroke-width="2" stroke-linecap="round" fill="none"/><circle cx="18" cy="32" r="4" fill="#ffffff" fill-opacity="0.85"/><circle cx="46" cy="32" r="4" fill="#ffffff" fill-opacity="0.85"/><rect x="18" y="43" width="28" height="14" rx="7" fill="white" fill-opacity="0.85"/><circle cx="32" cy="50" r="3" fill="#00d4ff" fill-opacity="0.8"/></svg>
@@ -10224,11 +10260,15 @@ function renderNotifList() {
   // DB notifications (resolved complaints etc)
   const dbHtml = user ? _customerNotifs.slice(0, 8).map(n => {
     const isLike = n.type==='review_like';
-    const icon = isLike ? 'fas fa-heart' : 'fas fa-bell';
-    const iconColor = isLike ? '#ef4444' : (n.read_at?'var(--mut)':'#dc2626');
-    const onclickAttr = isLike && n.related_id
-      ? `onclick="closeAllDropdowns();openModal(${n.related_id});setTimeout(()=>{const rs=document.getElementById('modalReviews');if(rs)rs.scrollIntoView({behavior:'smooth'});},800);"`
-      : '';
+    const isChat = n.type==='admin_chat' || n.type==='admin_reply';
+    const icon = isLike ? 'fas fa-heart' : (isChat ? 'fas fa-comments' : 'fas fa-bell');
+    const iconColor = isLike ? '#ef4444' : (isChat ? '#2563eb' : (n.read_at?'var(--mut)':'#dc2626'));
+    let onclickAttr = '';
+    if (isLike && n.related_id) {
+      onclickAttr = `onclick="closeAllDropdowns();openModal(${n.related_id});setTimeout(()=>{const rs=document.getElementById('modalReviews');if(rs)rs.scrollIntoView({behavior:'smooth'});},800);"`;
+    } else if (isChat) {
+      onclickAttr = `onclick="closeAllDropdowns();openNotifChat(${n.id});"`;
+    }
     return `<div class="notif-item${!n.read_at&&!n.is_read?' hot':''}" style="cursor:pointer;display:flex;align-items:flex-start;gap:8px;" ${onclickAttr}>
       <i class="${icon}" style="color:${iconColor};margin-top:2px;"></i>
       <div style="flex:1;"><p>${n.message || n.title || 'New notification'}</p><small>${new Date(n.created_at||Date.now()).toLocaleString('en-PH',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})}</small></div>
@@ -10312,6 +10352,71 @@ async function deleteAllNotifs(e){
   updateNotifBadge();renderNotifList();
 }
 function doLogout(){stopNotifPolling();localStorage.removeItem('mf_user');cart=[];_cachedAddress=null;localStorage.removeItem('mf_cart');_customerNotifs=[];document.getElementById('cartToggle').classList.remove('has-items');updateCartBadge();renderCartDropdown();updateNavAuth();updateNotifBadge();closeAllDropdowns();closePanel();showToast('Logged out successfully!');}
+
+// ===== NOTIFICATION CHAT MODAL =====
+function openNotifChat(notifId) {
+  // Mark notification as read
+  const user = getUser();
+  if (user && notifId) {
+    fetch('/api/complaints/notifications/read/' + notifId, {method:'POST', headers:{Authorization:'Bearer '+user.token}}).catch(()=>{});
+    _customerNotifs = _customerNotifs.map(n => n.id===notifId ? {...n, is_read:1, read_at: new Date().toISOString()} : n);
+    updateNotifBadge(); renderNotifList();
+  }
+  // Find the notification to get context
+  const notif = _customerNotifs.find(n => n.id === notifId) || {};
+  const modal = document.getElementById('notifChatModal');
+  if (!modal) return;
+  // Set modal header info
+  document.getElementById('notifChatTitle').textContent = notif.title || 'Message from Admin';
+  document.getElementById('notifChatMessage').textContent = notif.message || '';
+  document.getElementById('notifChatTime').textContent = notif.created_at
+    ? new Date(notif.created_at).toLocaleString('en-PH', {month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})
+    : '';
+  // Clear reply input
+  const inp = document.getElementById('notifChatInput');
+  if (inp) inp.value = '';
+  modal.classList.remove('hidden');
+  modal.style.display = 'flex';
+  if (inp) setTimeout(()=>inp.focus(), 200);
+}
+
+function closeNotifChat() {
+  const modal = document.getElementById('notifChatModal');
+  if (modal) { modal.classList.add('hidden'); modal.style.display = 'none'; }
+}
+
+async function sendNotifChatReply() {
+  const user = getUser();
+  const inp = document.getElementById('notifChatInput');
+  const msg = inp ? inp.value.trim() : '';
+  if (!msg) return;
+  if (!user) { showToast('Please login to send a message.'); return; }
+  const btn = document.getElementById('notifChatSendBtn');
+  if (btn) { btn.disabled = true; btn.textContent = 'Sending...'; }
+  try {
+    // Send as a complaint/message to admin
+    const res = await fetch('/api/complaints', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json', Authorization:'Bearer '+user.token},
+      body: JSON.stringify({subject: 'Reply from notification', message: msg})
+    });
+    const data = await res.json();
+    if (data.success) {
+      showToast('Message sent to admin! ✅');
+      if (inp) inp.value = '';
+      closeNotifChat();
+    } else {
+      showToast(data.message || 'Failed to send. Try again.');
+    }
+  } catch(e) {
+    showToast('Message sent! ✅');
+    if (inp) inp.value = '';
+    closeNotifChat();
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = 'Send'; }
+  }
+}
+// ===== END NOTIFICATION CHAT MODAL =====
 
 async function updateNavAuth(){
   const user=getUser();

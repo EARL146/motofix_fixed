@@ -802,4 +802,4 @@ router.get('/low-stock', async (req, res) => {
   }
 });
 
-  odule.exports = router;
+  module.exports = router;

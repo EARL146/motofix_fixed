@@ -7901,6 +7901,7 @@ let selectedMechanicId = null;
 let selectedMechanicIds = []; // multi-select array
 let selectedCType = 'complaint'; // FIX 1: declared once
 let complaints = JSON.parse(localStorage.getItem('mf_complaints') || '[]'); // FIX 1: declared once
+let serverComplaints = []; // holds complaints+admin replies fetched fresh from the server
 
 let PRODUCTS = [];
 const FLASH = [1,3,6,9,13];
@@ -8065,6 +8066,8 @@ document.addEventListener('DOMContentLoaded',()=>{
   if(getUser()){
     loadAddressCache(); // pre-cache address so checkout auto-fills instantly
     restoreAvatarFromDB(); // restore avatar from DB after refresh
+    loadCustomerNotifications(); // FIX: load bell notifications for already-logged-in sessions (was only firing right after the login form submit, so refreshed/persisted sessions never saw new admin messages)
+    startNotifPolling(); // FIX: keep polling every 15s so new admin messages show up without re-login
   }
   document.querySelectorAll('.theme-btn').forEach(b=>{const fn=b.getAttribute('onclick')||'';b.classList.toggle('active',fn.includes('${currentTheme}'));});
   document.querySelectorAll('.lang-btn').forEach(b=>{const fn=b.getAttribute('onclick')||'';b.classList.toggle('active',fn.includes('${currentLang}'));});
@@ -9808,7 +9811,7 @@ function switchPanelTab(tab){
   if(tab==='orders')renderOrders();
   if(tab==='favorites')renderFavGrid();
   if(tab==='profile')populateProfileForm();
-  if(tab==='complaints')renderComplaintsList();
+  if(tab==='complaints')fetchAndRenderComplaints();
   if(tab==='analytics')loadAdminAnalytics();
 }
 
@@ -10218,7 +10221,7 @@ function updateNotifBadge() {
     const now = Date.now();
     return s.status === 'active' && s.endTime > now;
   }).length;
-  const dbCount = _customerNotifs.filter(n => !n.read_at).length;
+  const dbCount = _customerNotifs.filter(n => !n.is_read && !n.read_at).length;
   const newUser = localStorage.getItem('mf_new_user') ? 1 : 0;
   const total = dbCount + flashCount + newUser;
 
@@ -10260,7 +10263,7 @@ function renderNotifList() {
   // DB notifications (resolved complaints etc)
   const dbHtml = user ? _customerNotifs.slice(0, 8).map(n => {
     const isLike = n.type==='review_like';
-    const isChat = n.type==='admin_chat' || n.type==='admin_reply';
+    const isChat = n.type==='admin_chat' || n.type==='admin_reply' || n.type==='admin_message' || n.type==='resolved';
     const icon = isLike ? 'fas fa-heart' : (isChat ? 'fas fa-comments' : 'fas fa-bell');
     const iconColor = isLike ? '#ef4444' : (isChat ? '#2563eb' : (n.read_at?'var(--mut)':'#dc2626'));
     let onclickAttr = '';
@@ -10395,7 +10398,7 @@ async function sendNotifChatReply() {
   if (btn) { btn.disabled = true; btn.textContent = 'Sending...'; }
   try {
     // Send as a complaint/message to admin
-    const res = await fetch('/api/complaints', {
+    const res = await fetch('/api/complaints/submit', {
       method: 'POST',
       headers: {'Content-Type':'application/json', Authorization:'Bearer '+user.token},
       body: JSON.stringify({subject: 'Reply from notification', message: msg})
@@ -12359,12 +12362,47 @@ function submitComplaint(){
   document.getElementById('complaint-subject').value='';document.getElementById('complaint-message').value='';selectCType('complaint');renderComplaintsList();showToast('✅ Submitted! We\'ll respond soon.');
 }
 
+// Fetch latest complaints/messages + admin replies from server, then render.
+async function fetchAndRenderComplaints(){
+  const el=document.getElementById('complaintsList');if(!el)return;
+  const user=getUser();
+  if(!user){renderComplaintsList();return;}
+  el.innerHTML='<div class="empty-panel"><p style="color:var(--tx2);font-size:0.85rem">Loading...</p></div>';
+  try{
+    const res=await fetch('/api/complaints',{headers:{Authorization:'Bearer '+(user.token||'')}});
+    const data=await res.json();
+    if(data.success && Array.isArray(data.data)){
+      // Normalize server rows (type is capitalized, dates are created_at) to match local shape
+      serverComplaints = data.data.map(c=>({
+        id:c.id, type:(c.type||'Complaint').toLowerCase(), subject:c.subject, message:c.message,
+        status:c.status, adminResponse:c.admin_response||'', resolvedAt:c.resolved_at,
+        date:c.created_at?new Date(c.created_at).toLocaleDateString('en-PH',{year:'numeric',month:'short',day:'numeric'}):'',
+        userId:user.id, fromServer:true
+      }));
+    }
+  }catch(e){ /* fall back to local cache below if server fetch fails */ }
+  renderComplaintsList();
+}
+
 function renderComplaintsList(){
   const el=document.getElementById('complaintsList');if(!el)return;
-  const user=getUser();const userComplaints=user?complaints.filter(c=>c.userId===user.id):[];
-  if(!userComplaints.length){el.innerHTML='<div class="empty-panel"><i class="fas fa-inbox" style="font-size:2rem;color:var(--bd)"></i><p style="margin-top:8px;color:var(--tx2);font-size:0.85rem">No submissions yet</p></div>';return;}
+  const user=getUser();
+  // Prefer server data (has admin replies); fall back to local-only submissions not yet confirmed by server
+  const source = (typeof serverComplaints!=='undefined' && serverComplaints.length) ? serverComplaints : (user?complaints.filter(c=>c.userId===user.id):[]);
+  if(!source.length){el.innerHTML='<div class="empty-panel"><i class="fas fa-inbox" style="font-size:2rem;color:var(--bd)"></i><p style="margin-top:8px;color:var(--tx2);font-size:0.85rem">No submissions yet</p></div>';return;}
   const typeLabels={complaint:'🚨 Complaint',request:'📋 Request',feedback:'💬 Feedback'};const statusLabels={open:'⏳ Open',reviewing:'🔍 Reviewing',resolved:'✅ Resolved'};
-  el.innerHTML=userComplaints.map(c=>`<div class="complaint-card"><div class="complaint-card-head"><span class="complaint-type ${c.type}">${typeLabels[c.type]||c.type}</span><span class="complaint-status cstatus-${c.status}">${statusLabels[c.status]||c.status}</span></div><div style="font-size:0.85rem;font-weight:800;color:var(--tx);margin-bottom:4px">${c.subject}</div><div class="complaint-msg">${c.message}</div><div style="display:flex;justify-content:space-between;align-items:center"><span class="complaint-date"><i class="fas fa-calendar-alt"></i> ${c.date}</span><button onclick="deleteComplaint(${c.id})" style="background:none;border:none;color:#e44;font-size:0.78rem;cursor:pointer;font-family:'Nunito',sans-serif;"><i class="fas fa-trash"></i></button></div></div>`).join('');
+  el.innerHTML=source.map(c=>{
+    const reply=c.adminResponse||c.admin_response;
+    const replyHtml = reply ? `
+      <div style="margin-top:10px;padding:10px 12px;background:var(--bg2);border-left:3px solid var(--or);border-radius:8px;">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
+          <i class="fas fa-user-shield" style="color:var(--or);font-size:11px;"></i>
+          <span style="font-size:11px;font-weight:800;color:var(--or);">Admin replied${c.resolvedAt?' · '+new Date(c.resolvedAt).toLocaleDateString('en-PH',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}):''}</span>
+        </div>
+        <p style="margin:0;font-size:0.83rem;color:var(--tx);line-height:1.4;">${reply}</p>
+      </div>` : `<div style="margin-top:8px;font-size:0.78rem;color:var(--tx2);"><i class="fas fa-hourglass-half"></i> Waiting for admin response...</div>`;
+    return `<div class="complaint-card"><div class="complaint-card-head"><span class="complaint-type ${c.type}">${typeLabels[c.type]||c.type}</span><span class="complaint-status cstatus-${c.status}">${statusLabels[c.status]||c.status}</span></div><div style="font-size:0.85rem;font-weight:800;color:var(--tx);margin-bottom:4px">${c.subject||''}</div><div class="complaint-msg">${c.message}</div>${replyHtml}<div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;"><span class="complaint-date"><i class="fas fa-calendar-alt"></i> ${c.date}</span>${c.fromServer?'':`<button onclick="deleteComplaint(${c.id})" style="background:none;border:none;color:#e44;font-size:0.78rem;cursor:pointer;font-family:'Nunito',sans-serif;"><i class="fas fa-trash"></i></button>`}</div></div>`;
+  }).join('');
 }
 
 function deleteComplaint(id){if(!confirm('Remove this submission?'))return;complaints=complaints.filter(c=>c.id!==id);localStorage.setItem('mf_complaints',JSON.stringify(complaints));renderComplaintsList();showToast('🗑️ Removed');}

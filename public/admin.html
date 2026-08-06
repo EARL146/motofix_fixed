@@ -1046,6 +1046,20 @@ tr:hover td{background:var(--bg);}
         </select>
       </div>
       <div class="fg">
+        <label class="fl">Message Type <span style="color:var(--tx2);font-weight:400;">(optional — auto-fills a professional template)</span></label>
+        <select class="fi" id="notify-category" onchange="applyNotifyTemplate()">
+          <option value="">— Choose a category —</option>
+          <option value="order_update">📦 Order Update</option>
+          <option value="service_reminder">🔧 Service Reminder</option>
+          <option value="complaint_response">🚨 Complaint Response</option>
+          <option value="request_update">📋 Request Update</option>
+          <option value="promo">⚡ Promo / Announcement</option>
+          <option value="account_notice">🔐 Account Notice</option>
+          <option value="thank_you">🙏 Thank You / Feedback Reply</option>
+          <option value="custom">✏️ Custom (blank)</option>
+        </select>
+      </div>
+      <div class="fg">
         <label class="fl">Title <span style="color:var(--err);">*</span></label>
         <input class="fi" id="notify-title" placeholder="e.g. Your order is on its way!" maxlength="200"/>
       </div>
@@ -1053,6 +1067,7 @@ tr:hover td{background:var(--bg);}
         <label class="fl">Message <span style="color:var(--err);">*</span></label>
         <textarea class="ft" id="notify-message" rows="4" placeholder="Type your message to the customer..." style="resize:vertical;min-height:90px;"></textarea>
       </div>
+      <div style="font-size:0.75rem;color:var(--tx2);margin-top:-6px;">💡 Picking a category fills in professional wording — feel free to edit it (e.g. fill in order #, date, or customer name) before sending.</div>
     </div>
     <div class="mft">
       <button class="btn bo" onclick="closeMod('mod-notify')">Cancel</button>
@@ -2342,8 +2357,56 @@ async function saveShopSettings() {
 
 // ===== ADMIN → CUSTOMER MESSAGES =====
 let _notifCustomers = [];
+
+// Professional, ready-to-send templates per message category.
+// Admin can still edit the auto-filled text (e.g. insert order #, date, name) before sending.
+const NOTIFY_TEMPLATES = {
+  order_update: {
+    title: 'Update on Your Order',
+    message: 'Hi! We wanted to give you an update regarding your recent order with MotoFix. [Insert order # and status here]. Thank you for your patience and for choosing MotoFix.'
+  },
+  service_reminder: {
+    title: 'Service Reminder',
+    message: 'Hi! This is a friendly reminder from MotoFix regarding your upcoming/booked service appointment. [Insert date, time, and mechanic/branch details here]. Please let us know if you need to reschedule.'
+  },
+  complaint_response: {
+    title: 'Regarding Your Complaint',
+    message: 'Hi! Thank you for bringing this to our attention. We have reviewed your complaint and here is our response: [Insert resolution details here]. We apologize for any inconvenience and appreciate your patience.'
+  },
+  request_update: {
+    title: 'Update on Your Request',
+    message: 'Hi! We have an update regarding the request you submitted: [Insert update details here]. Please reach out if you have further questions.'
+  },
+  promo: {
+    title: 'Special Offer from MotoFix',
+    message: 'Hi! We have an exciting offer just for you: [Insert promo/announcement details here]. Don\'t miss out — visit MotoFix today!'
+  },
+  account_notice: {
+    title: 'Important Account Notice',
+    message: 'Hi! This is an important notice regarding your MotoFix account: [Insert notice details here]. If this wasn\'t you or you need help, please contact our support team.'
+  },
+  thank_you: {
+    title: 'Thank You for Your Feedback',
+    message: 'Hi! Thank you so much for taking the time to share your feedback with us. We truly value your input and will use it to improve our products and services. We hope to serve you again soon!'
+  },
+  custom: { title: '', message: '' }
+};
+
+function applyNotifyTemplate() {
+  const cat = (document.getElementById('notify-category') || {}).value || '';
+  if (!cat) return;
+  const t = NOTIFY_TEMPLATES[cat];
+  if (!t) return;
+  const titleEl = document.getElementById('notify-title');
+  const msgEl = document.getElementById('notify-message');
+  if (titleEl) titleEl.value = t.title;
+  if (msgEl) msgEl.value = t.message;
+}
+
 async function openNotifyModal() {
   openMod('mod-notify');
+  const catEl = document.getElementById('notify-category');
+  if (catEl) catEl.value = '';
   const sel = document.getElementById('notify-recipient');
   if (sel && sel.options.length <= 1) {
     try {
@@ -2377,6 +2440,8 @@ async function sendAdminNotification() {
       showToast('✅ ' + data.message);
       document.getElementById('notify-title').value = '';
       document.getElementById('notify-message').value = '';
+      const catEl = document.getElementById('notify-category');
+      if (catEl) catEl.value = '';
       closeMod('mod-notify');
     } else {
       showToast('❌ ' + (data.message || 'Failed to send'));

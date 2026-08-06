@@ -7539,14 +7539,9 @@ img {
         <p id="notifChatMessage" style="margin:0;font-size:14px;line-height:1.5;color:var(--tx,#222);"></p>
       </div>
     </div>
-    <!-- Reply area -->
-    <div style="padding:8px 18px 18px;display:flex;flex-direction:column;gap:8px;">
-      <label style="font-size:12px;color:var(--mut,#888);font-weight:600;">Reply to Admin:</label>
-      <textarea id="notifChatInput" rows="3" placeholder="Type your message here..." style="width:100%;resize:none;border:1.5px solid var(--bd,#ddd);border-radius:10px;padding:10px 12px;font-size:13.5px;font-family:inherit;background:var(--bg,#fff);color:var(--tx,#222);outline:none;box-sizing:border-box;" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendNotifChatReply();}"></textarea>
-      <div style="display:flex;gap:8px;justify-content:flex-end;">
-        <button onclick="closeNotifChat()" style="padding:9px 18px;border-radius:8px;border:1.5px solid var(--bd,#ddd);background:none;color:var(--tx,#555);font-size:13px;cursor:pointer;font-weight:600;">Cancel</button>
-        <button id="notifChatSendBtn" onclick="sendNotifChatReply()" style="padding:9px 22px;border-radius:8px;border:none;background:var(--or,#e8400c);color:#fff;font-size:13px;cursor:pointer;font-weight:700;display:flex;align-items:center;gap:6px;"><i class="fas fa-paper-plane"></i> Send</button>
-      </div>
+    <!-- Reply area removed — this box is view-only. Customers reply via the Complaints/Feedback form instead. -->
+    <div style="padding:8px 18px 18px;display:flex;justify-content:flex-end;">
+      <button onclick="closeNotifChat()" style="padding:9px 22px;border-radius:8px;border:none;background:var(--or,#e8400c);color:#fff;font-size:13px;cursor:pointer;font-weight:700;">Close</button>
     </div>
   </div>
 </div>

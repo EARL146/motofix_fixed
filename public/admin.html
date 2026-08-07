@@ -379,6 +379,77 @@ tr:hover td{background:var(--bg);}
 .mx svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;}
 .mbd{padding:20px;}
 .mft{padding:14px 20px;border-top:1px solid var(--bdr);display:flex;justify-content:flex-end;gap:8px;}
+.mhd .mt{font-size:18px;letter-spacing:-.02em;}
+.mhd .mx{width:34px;height:34px;border-radius:10px;background:var(--bg);border:1px solid var(--bdr);transition:transform .15s,background .15s,border-color .15s;}
+.mhd .mx:hover{transform:translateY(-1px);background:var(--pl);border-color:var(--p);}
+.mhd .mx svg{width:14px;height:14px;}
+.mech-form{padding-top:18px;}
+.mech-hero{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:16px;padding:16px 16px 14px;border:1px solid var(--bdr);border-radius:14px;background:linear-gradient(180deg,var(--card),rgba(232,64,12,.03));box-shadow:var(--sh);}
+.mech-kicker{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--p);margin-bottom:5px;}
+.mech-hero h3{font-size:17px;line-height:1.15;margin-bottom:6px;}
+.mech-hero p{font-size:12px;color:var(--mut);max-width:290px;}
+.mech-badge{display:inline-flex;align-items:center;gap:6px;padding:8px 10px;border-radius:999px;background:var(--pl);color:var(--p);font-size:11px;font-weight:700;white-space:nowrap;}
+.mech-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;}
+.mech-grid .fg{margin-bottom:0;}
+.mech-grid .fg.full{grid-column:1 / -1;}
+.mech-card{margin-top:13px;padding:14px;border:1px solid var(--bdr);border-radius:14px;background:var(--bg);}
+.mech-card .fl{margin-bottom:8px;display:block;}
+.mech-photo-wrap{display:grid;grid-template-columns:110px 1fr;gap:14px;align-items:center;margin-bottom:10px;}
+#mech-photo-preview{min-height:110px;border:1px dashed var(--bdr);border-radius:14px;background:linear-gradient(180deg,var(--card),var(--bg));display:flex;align-items:center;justify-content:center;overflow:hidden;}
+#mech-photo-preview img{width:100%;height:100%;object-fit:cover;display:block;}
+#mech-photo-preview:empty::before{content:'Preview';color:var(--mut);font-size:12px;font-weight:600;letter-spacing:.03em;}
+.mech-note{font-size:12px;color:var(--mut);line-height:1.5;}
+.mech-note strong{color:var(--txt);}
+.mech-status{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:12px;color:var(--mut);margin-top:8px;}
+.mech-status span{padding:5px 10px;border-radius:999px;background:rgba(34,197,94,.12);color:#22c55e;font-weight:700;}
+.prod-modal{max-width:680px;}
+.prod-head{background:linear-gradient(135deg,#141b2d,var(--p));border-radius:var(--r2) var(--r2) 0 0;padding:18px 22px;}
+.prod-head .mt{color:#fff;font-size:17px;font-weight:800;}
+.prod-head-left{display:flex;align-items:center;gap:10px;}
+.prod-head-icon{width:38px;height:38px;border-radius:11px;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;border:1px solid rgba(255,255,255,.14);}
+.prod-form{padding:22px;display:flex;flex-direction:column;gap:16px;}
+.prod-hero{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:16px;border:1px solid var(--bdr);border-radius:16px;background:linear-gradient(180deg,var(--card),rgba(232,64,12,.04));box-shadow:var(--sh);}
+.prod-kicker{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--p);margin-bottom:6px;}
+.prod-hero h3{font-size:18px;line-height:1.15;margin-bottom:6px;}
+.prod-hero p{font-size:12px;color:var(--mut);max-width:360px;}
+.prod-badge{display:inline-flex;align-items:center;gap:6px;padding:8px 11px;border-radius:999px;background:var(--pl);color:var(--p);font-size:11px;font-weight:700;white-space:nowrap;}
+.prod-section{background:var(--bg);border-radius:15px;padding:16px;border:1px solid var(--bdr);}
+.prod-section-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px;}
+.prod-section-title{display:flex;align-items:center;gap:8px;}
+.prod-section-title i{color:var(--p);font-size:13px;}
+.prod-section-title strong{display:block;font-size:13px;font-weight:700;color:var(--dark);}
+.prod-section-sub{font-size:11px;color:var(--mut);}
+.prod-meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;}
+.prod-action-btn{background:var(--p);color:#fff;border:none;border-radius:9px;padding:6px 12px;font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:5px;box-shadow:0 10px 24px rgba(232,64,12,.18);}
+.prod-action-btn:hover{transform:translateY(-1px);}
+.prod-picker{display:flex;gap:8px;flex-wrap:wrap;}
+.prod-emoji-choice{font-size:22px;cursor:pointer;padding:7px 8px;border-radius:10px;border:2px solid transparent;background:var(--card);transition:border-color .15s,transform .15s,background .15s;}
+.prod-emoji-choice:hover{border-color:var(--p);background:var(--pl);transform:translateY(-1px);}
+.prod-emoji-choice.active{border-color:var(--p)!important;background:var(--pl);transform:translateY(-1px);}
+.prod-foot{background:var(--bg);border-radius:0 0 var(--r2) var(--r2);}
+.prod-dyn-card{background:var(--card)!important;padding:12px!important;border-radius:12px!important;border:1px solid var(--bdr)!important;box-shadow:0 8px 24px rgba(15,23,42,.04);}
+.prod-dyn-top{display:flex;align-items:center;gap:8px;}
+.prod-price-box{display:flex;align-items:center;gap:4px;flex-shrink:0;min-width:96px;}
+.prod-remove-btn{background:none;border:none;color:var(--err);font-size:18px;cursor:pointer;padding:0 4px;flex-shrink:0;}
+.prod-mini-slots{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.prod-mini-slots-label{font-size:11px;color:var(--mut);font-weight:700;width:42px;flex-shrink:0;}
+.prod-mini-slot{width:58px;height:58px;border-radius:10px;border:2px dashed var(--bdr);cursor:pointer;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:var(--bg);position:relative;transition:border-color .15s,background .15s;}
+.prod-mini-slot:hover{border-color:var(--p);background:var(--pl);}
+.prod-mini-slot-preview{width:100%;height:100%;display:flex;align-items:center;justify-content:center;}
+.prod-mini-slot-preview img{width:100%;height:100%;object-fit:cover;border-radius:8px;display:block;}
+.prod-mini-slot-empty{text-align:center;color:var(--mut);font-size:10px;}
+.prod-mini-slot-empty i{font-size:14px;display:block;margin-bottom:2px;}
+.prod-mini-remove{position:absolute;top:3px;right:3px;background:rgba(15,23,42,.72);color:#fff;border-radius:999px;width:16px;height:16px;font-size:9px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+.size-row.prod-dyn-card{display:grid!important;grid-template-columns:minmax(0,1fr) 124px auto;gap:8px;align-items:center;}
+.img-slot-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.img-slot-label-text{font-size:.75rem;font-weight:800;color:var(--mut);margin-bottom:6px;}
+.img-slot{display:flex;flex-direction:column;align-items:center;justify-content:center;border:2px dashed var(--bdr);border-radius:14px;height:126px;cursor:pointer;background:linear-gradient(180deg,var(--card),var(--bg));transition:border-color .2s,background .2s,transform .2s;overflow:hidden;position:relative;}
+.img-slot:hover{border-color:var(--p);background:rgba(238,77,45,.04);transform:translateY(-1px);}
+.img-slot-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;pointer-events:none;}
+.img-slot-placeholder i{font-size:1.45rem;color:var(--mut);}
+.img-slot-placeholder span{font-size:.74rem;color:var(--mut);font-weight:600;}
+.img-slot-media{width:100%;height:100%;display:block;}
+.img-slot-media img{width:100%;height:100%;object-fit:cover;border-radius:8px;display:block;}
 
 /* PROFILE PANEL */
 .ppanel{display:none;position:fixed;top:var(--hh);right:14px;width:320px;background:var(--card);border-radius:var(--r2);border:1px solid var(--bdr);box-shadow:var(--sh2);z-index:300;animation:fu .2s ease;overflow:hidden;max-height:calc(100vh - var(--hh) - 20px);overflow-y:auto;}
@@ -436,15 +507,17 @@ tr:hover td{background:var(--bg);}
 .img-preview-box{width:80px;height:80px;border-radius:10px;background:var(--bg);border:2px dashed var(--bdr);display:flex;align-items:center;justify-content:center;font-size:28px;cursor:pointer;overflow:hidden;flex-shrink:0;transition:border-color .15s;}
 .img-preview-box:hover{border-color:var(--p);}
 .img-preview-box img{width:100%;height:100%;object-fit:cover;display:block;}
-.img-slot-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.img-slot-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
 .img-slot-label-text{font-size:0.75rem;font-weight:800;color:var(--mut);margin-bottom:6px;}
 .img-slot-label-text .req{color:var(--err);}
-.img-slot{display:flex;flex-direction:column;align-items:center;justify-content:center;border:2px dashed var(--bdr);border-radius:10px;height:110px;cursor:pointer;background:var(--bg);transition:border-color 0.2s,background 0.2s;overflow:hidden;position:relative;}
-.img-slot:hover{border-color:var(--p);background:rgba(238,77,45,0.04);}
+.img-slot{display:flex;flex-direction:column;align-items:center;justify-content:center;border:2px dashed var(--bdr);border-radius:14px;height:126px;cursor:pointer;background:linear-gradient(180deg,var(--card),var(--bg));transition:border-color .2s,background .2s,transform .2s;overflow:hidden;position:relative;}
+.img-slot:hover{border-color:var(--p);background:rgba(238,77,45,0.04);transform:translateY(-1px);}
 .img-slot input[type="file"]{display:none;}
-.img-slot-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;pointer-events:none;}
-.img-slot-placeholder i{font-size:1.6rem;color:var(--mut);}
-.img-slot-placeholder span{font-size:0.72rem;color:var(--mut);}
+.img-slot-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;pointer-events:none;}
+.img-slot-placeholder i{font-size:1.45rem;color:var(--mut);}
+.img-slot-placeholder span{font-size:0.74rem;color:var(--mut);font-weight:600;}
+.img-slot-media{width:100%;height:100%;display:block;}
+.img-slot-media img{width:100%;height:100%;object-fit:cover;border-radius:8px;display:block;}
 
 /* ===== RESPONSIVE ===== */
 @media(max-width:1100px){.c8{grid-column:span 12;}.c4{grid-column:span 6;}.c7{grid-column:span 12;}.c5{grid-column:span 12;}}
@@ -460,10 +533,18 @@ tr:hover td{background:var(--bg);}
   .hsrch{width:140px;}
   .pgrid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));}
 }
+  .prod-hero,.mech-hero{flex-direction:column;}
+  .prod-meta-grid,.mech-grid{grid-template-columns:1fr;}
+  .img-slot-grid-3{grid-template-columns:1fr;}
+  .mech-photo-wrap{grid-template-columns:1fr;}
+  .size-row.prod-dyn-card{grid-template-columns:1fr;}
 @media(max-width:600px){
   .c3,.c4,.c5,.c6,.c7,.c8,.c12{grid-column:span 12;}
   .g12{gap:10px;}
   .pg{padding:12px 14px;}
+  .prod-form{padding:16px;}
+  .prod-section,.mech-card{padding:14px;}
+  .prod-head,.mhd{padding-left:16px;padding-right:16px;}
   .pg-hd{margin-bottom:14px;gap:8px;}
   .pg-t{font-size:17px;}
   .hdr{padding:0 12px;height:56px;}
@@ -1577,66 +1658,84 @@ tr:hover td{background:var(--bg);}
 
 <!-- MODAL: Add/Edit Product (ENHANCED) -->
 <div class="mov" id="mod-product">
-  <div class="modal" style="max-width:580px;">
-    <div class="mhd" style="background:linear-gradient(135deg,var(--p),#c0392b);border-radius:var(--r2) var(--r2) 0 0;padding:18px 22px;">
-      <div style="display:flex;align-items:center;gap:10px;">
-        <div style="width:34px;height:34px;border-radius:9px;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;">
-          <i class="fas fa-box" style="color:#fff;font-size:14px;"></i>
+  <div class="modal prod-modal">
+    <div class="mhd prod-head">
+      <div class="prod-head-left">
+        <div class="prod-head-icon">
+          <i class="fas fa-box"></i>
         </div>
-        <div class="mt" id="prod-modal-title" style="color:#fff;font-size:16px;font-weight:800;">Add Product</div>
+        <div class="mt" id="prod-modal-title">Add Product</div>
       </div>
       <div class="mx" onclick="closeMod('mod-product')" style="color:#fff;opacity:0.8;"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
     </div>
-    <div class="mbd" style="padding:22px;">
+    <div class="mbd prod-form">
       <input type="hidden" id="prod-edit-idx" value="-1"/>
       <input type="hidden" id="prod-existing-img1" value=""/>
       <input type="hidden" id="prod-existing-img2" value=""/>
       <input type="hidden" id="prod-existing-img3" value=""/>
 
+      <div class="prod-hero">
+        <div>
+          <div class="prod-kicker">Catalog management</div>
+          <h3>Professional product entry</h3>
+          <p>Upload strong visuals, organize stock and pricing, and prepare a clean product record for the admin catalog.</p>
+        </div>
+        <div class="prod-badge"><i class="fas fa-store"></i> Ready for listing</div>
+      </div>
+
       <!-- SECTION: Product Images -->
-      <div style="background:var(--bg);border-radius:12px;padding:16px;margin-bottom:16px;border:1px solid var(--bdr);">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
-          <i class="fas fa-images" style="color:var(--p);font-size:13px;"></i>
-          <span style="font-size:13px;font-weight:700;color:var(--dark);">Product Images</span>
-          <span style="font-size:11px;color:var(--mut);">(up to 3 photos)</span>
+      <div class="prod-section">
+        <div class="prod-section-head">
+          <div class="prod-section-title">
+            <i class="fas fa-images"></i>
+            <div>
+              <strong>Product Images</strong>
+              <div class="prod-section-sub">up to 3 photos</div>
+            </div>
+          </div>
         </div>
         <div class="img-slot-grid-3">
           <div>
             <p class="img-slot-label-text">Main Photo <span class="req">*</span></p>
             <label class="img-slot" id="prodAdminSlot1Label">
               <input type="file" id="prod-img-in-1" name="productImages" accept="image/*" style="display:none;" onchange="previewAdminProdImg(event,1)"/>
-              <div id="prodAdminSlotPreview1" class="img-slot-placeholder"><i class="fas fa-camera" style="font-size:1.4rem;"></i><span>Upload</span></div>
+              <div id="prodAdminSlotPreview1" class="img-slot-placeholder"><i class="fas fa-camera"></i><span>Click to upload</span></div>
             </label>
           </div>
           <div>
             <p class="img-slot-label-text">Photo 2</p>
             <label class="img-slot" id="prodAdminSlot2Label">
               <input type="file" id="prod-img-in-2" name="productImages" accept="image/*" style="display:none;" onchange="previewAdminProdImg(event,2)"/>
-              <div id="prodAdminSlotPreview2" class="img-slot-placeholder"><i class="fas fa-camera" style="font-size:1.4rem;"></i><span>Upload</span></div>
+              <div id="prodAdminSlotPreview2" class="img-slot-placeholder"><i class="fas fa-camera"></i><span>Click to upload</span></div>
             </label>
           </div>
           <div>
             <p class="img-slot-label-text">Photo 3</p>
             <label class="img-slot" id="prodAdminSlot3Label">
               <input type="file" id="prod-img-in-3" name="productImages" accept="image/*" style="display:none;" onchange="previewAdminProdImg(event,3)"/>
-              <div id="prodAdminSlotPreview3" class="img-slot-placeholder"><i class="fas fa-camera" style="font-size:1.4rem;"></i><span>Upload</span></div>
+              <div id="prodAdminSlotPreview3" class="img-slot-placeholder"><i class="fas fa-camera"></i><span>Click to upload</span></div>
             </label>
           </div>
         </div>
-        <div style="font-size:11px;color:var(--mut);margin-top:8px;text-align:center;">JPG, PNG, WEBP · Max 5MB each</div>
+        <div class="prod-section-sub" style="margin-top:10px;text-align:center;">JPG, PNG, WEBP · Max 5MB each</div>
       </div>
 
       <!-- SECTION: Basic Info -->
-      <div style="background:var(--bg);border-radius:12px;padding:16px;margin-bottom:16px;border:1px solid var(--bdr);">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
-          <i class="fas fa-info-circle" style="color:var(--p);font-size:13px;"></i>
-          <span style="font-size:13px;font-weight:700;color:var(--dark);">Basic Information</span>
+      <div class="prod-section">
+        <div class="prod-section-head">
+          <div class="prod-section-title">
+            <i class="fas fa-info-circle"></i>
+            <div>
+              <strong>Basic Information</strong>
+              <div class="prod-section-sub">Core product details for pricing and stock.</div>
+            </div>
+          </div>
         </div>
         <div class="fg">
           <label class="fl">Product Name <span style="color:var(--err);">*</span></label>
           <input class="fi" id="prod-name" placeholder="e.g. Honda Brake Pads ADV 160"/>
         </div>
-        <div class="fr2">
+        <div class="prod-meta-grid">
           <div class="fg">
             <label class="fl">Base Price (₱) <span style="color:var(--err);">*</span></label>
             <input class="fi" id="prod-price" type="number" min="0" placeholder="0.00"/>
@@ -1660,14 +1759,16 @@ tr:hover td{background:var(--bg);}
       </div>
 
       <!-- SECTION: Brands -->
-      <div style="background:var(--bg);border-radius:12px;padding:16px;margin-bottom:16px;border:1px solid var(--bdr);">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-          <div style="display:flex;align-items:center;gap:8px;">
-            <i class="fas fa-tag" style="color:var(--p);font-size:13px;"></i>
-            <span style="font-size:13px;font-weight:700;color:var(--dark);">Brands</span>
-            <span style="font-size:11px;color:var(--mut);">up to 10</span>
+      <div class="prod-section">
+        <div class="prod-section-head">
+          <div class="prod-section-title">
+            <i class="fas fa-tag"></i>
+            <div>
+              <strong>Brands</strong>
+              <div class="prod-section-sub">up to 10</div>
+            </div>
           </div>
-          <button type="button" onclick="addBrandRow()" style="background:var(--p);color:#fff;border:none;border-radius:8px;padding:5px 12px;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:5px;">
+          <button type="button" onclick="addBrandRow()" class="prod-action-btn">
             <i class="fas fa-plus"></i> Add Brand
           </button>
         </div>
@@ -1675,14 +1776,16 @@ tr:hover td{background:var(--bg);}
       </div>
 
       <!-- SECTION: Sizes -->
-      <div style="background:var(--bg);border-radius:12px;padding:16px;margin-bottom:16px;border:1px solid var(--bdr);">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-          <div style="display:flex;align-items:center;gap:8px;">
-            <i class="fas fa-ruler" style="color:var(--p);font-size:13px;"></i>
-            <span style="font-size:13px;font-weight:700;color:var(--dark);">Sizes &amp; Prices</span>
-            <span style="font-size:11px;color:var(--mut);">up to 10</span>
+      <div class="prod-section">
+        <div class="prod-section-head">
+          <div class="prod-section-title">
+            <i class="fas fa-ruler"></i>
+            <div>
+              <strong>Sizes &amp; Prices</strong>
+              <div class="prod-section-sub">up to 10</div>
+            </div>
           </div>
-          <button type="button" onclick="addSizeRow()" style="background:var(--p);color:#fff;border:none;border-radius:8px;padding:5px 12px;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:5px;">
+          <button type="button" onclick="addSizeRow()" class="prod-action-btn">
             <i class="fas fa-plus"></i> Add Size
           </button>
         </div>
@@ -1690,22 +1793,27 @@ tr:hover td{background:var(--bg);}
       </div>
 
       <!-- SECTION: Emoji & Description -->
-      <div style="background:var(--bg);border-radius:12px;padding:16px;margin-bottom:4px;border:1px solid var(--bdr);">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
-          <i class="fas fa-smile" style="color:var(--p);font-size:13px;"></i>
-          <span style="font-size:13px;font-weight:700;color:var(--dark);">Emoji Icon & Description</span>
+      <div class="prod-section" style="margin-bottom:4px;">
+        <div class="prod-section-head">
+          <div class="prod-section-title">
+            <i class="fas fa-smile"></i>
+            <div>
+              <strong>Emoji Icon &amp; Description</strong>
+              <div class="prod-section-sub">Use a fallback icon when no product image is available.</div>
+            </div>
+          </div>
         </div>
         <div class="fg">
           <label class="fl">Emoji Icon <span style="font-weight:400;color:var(--mut);font-size:11px;">(fallback if no image)</span></label>
-          <div style="display:flex;gap:7px;flex-wrap:wrap;" id="emoji-picker">
-            <span style="font-size:22px;cursor:pointer;padding:5px;border-radius:7px;border:2px solid var(--p);" onclick="selectEmoji(this)">🔧</span>
-            <span style="font-size:22px;cursor:pointer;padding:5px;border-radius:7px;border:2px solid transparent;" onclick="selectEmoji(this)">🛢️</span>
-            <span style="font-size:22px;cursor:pointer;padding:5px;border-radius:7px;border:2px solid transparent;" onclick="selectEmoji(this)">⚙️</span>
-            <span style="font-size:22px;cursor:pointer;padding:5px;border-radius:7px;border:2px solid transparent;" onclick="selectEmoji(this)">🔩</span>
-            <span style="font-size:22px;cursor:pointer;padding:5px;border-radius:7px;border:2px solid transparent;" onclick="selectEmoji(this)">🏍️</span>
-            <span style="font-size:22px;cursor:pointer;padding:5px;border-radius:7px;border:2px solid transparent;" onclick="selectEmoji(this)">💡</span>
-            <span style="font-size:22px;cursor:pointer;padding:5px;border-radius:7px;border:2px solid transparent;" onclick="selectEmoji(this)">🛞</span>
-            <span style="font-size:22px;cursor:pointer;padding:5px;border-radius:7px;border:2px solid transparent;" onclick="selectEmoji(this)">🧰</span>
+          <div class="prod-picker" id="emoji-picker">
+            <span class="prod-emoji-choice active" onclick="selectEmoji(this)">🔧</span>
+            <span class="prod-emoji-choice" onclick="selectEmoji(this)">🛢️</span>
+            <span class="prod-emoji-choice" onclick="selectEmoji(this)">⚙️</span>
+            <span class="prod-emoji-choice" onclick="selectEmoji(this)">🔩</span>
+            <span class="prod-emoji-choice" onclick="selectEmoji(this)">🏍️</span>
+            <span class="prod-emoji-choice" onclick="selectEmoji(this)">💡</span>
+            <span class="prod-emoji-choice" onclick="selectEmoji(this)">🛞</span>
+            <span class="prod-emoji-choice" onclick="selectEmoji(this)">🧰</span>
           </div>
           <input type="hidden" id="prod-emoji" value="🔧"/>
           <input type="hidden" id="prod-img-data" value=""/>
@@ -1717,7 +1825,7 @@ tr:hover td{background:var(--bg);}
       </div>
 
     </div>
-    <div class="mft" style="background:var(--bg);border-radius:0 0 var(--r2) var(--r2);">
+    <div class="mft prod-foot">
       <button class="btn bo" onclick="closeMod('mod-product')"><i class="fas fa-times" style="font-size:12px;"></i> Cancel</button>
       <button class="btn bp" onclick="saveProduct()" style="background:var(--p);color:#fff;padding:9px 20px;"><i class="fas fa-save" style="font-size:12px;"></i> Save Product</button>
     </div>
@@ -1728,11 +1836,20 @@ tr:hover td{background:var(--bg);}
 <div class="mov" id="mod-mechanic">
   <div class="modal">
     <div class="mhd"><div class="mt" id="mech-modal-title">Add Mechanic</div><div class="mx" onclick="closeMod('mod-mechanic')"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div></div>
-    <div class="mbd">
+    <div class="mbd mech-form">
       <input type="hidden" id="mech-edit-id" value="">
       <input type="hidden" id="mech-existing-photo" value="">
-      <div class="fg"><label class="fl">Full Name *</label><input class="fi" id="mech-name" placeholder="e.g. Juan Dela Cruz"/></div>
-      <div class="fg"><label class="fl">Specialization *</label><select class="fsel" id="mech-specialty">
+      <div class="mech-hero">
+        <div>
+          <div class="mech-kicker">Workshop staff profile</div>
+          <h3>Reliable mechanic record</h3>
+          <p>Enter the mechanic’s basic details, fee, availability, and photo for a polished admin listing.</p>
+        </div>
+        <div class="mech-badge"><i class="fas fa-tools"></i> Admin managed</div>
+      </div>
+      <div class="mech-grid">
+        <div class="fg full"><label class="fl">Full Name *</label><input class="fi" id="mech-name" placeholder="e.g. Juan Dela Cruz"/></div>
+        <div class="fg full"><label class="fl">Specialization *</label><select class="fsel" id="mech-specialty">
         <option>General Motor Repair</option>
         <option>Electrical & Wiring</option>
         <option>Tire & Wheels Specialist</option>
@@ -1741,15 +1858,22 @@ tr:hover td{background:var(--bg);}
         <option>Body & Paint</option>
         <option>Brake & Suspension</option>
       </select></div>
-      <div class="fr2">
         <div class="fg"><label class="fl">Service Fee (₱) *</label><input class="fi" id="mech-fee" type="number" min="0" placeholder="500"/></div>
         <div class="fg"><label class="fl">Experience (years) *</label><input class="fi" id="mech-exp" type="number" min="0" max="50" placeholder="5"/></div>
+        <div class="fg full"><label class="fl">Status</label><select class="fsel" id="mech-available">
+          <option value="1">Available</option>
+          <option value="0">Not Available</option>
+        </select>
+        <div class="mech-status"><div>Shown to customers as the current booking state.</div><span>Live roster</span></div></div>
       </div>
-      <div class="fg"><label class="fl">Status</label><select class="fsel" id="mech-available">
-        <option value="1">Available</option>
-        <option value="0">Not Available</option>
-      </select></div>
-      <div class="fg"><label class="fl">Photo (optional)</label><div id="mech-photo-preview" style="margin-bottom:6px;"></div><input class="fi" type="file" id="mech-photo" accept="image/*"/></div>
+      <div class="mech-card">
+        <label class="fl">Photo (optional)</label>
+        <div class="mech-photo-wrap">
+          <div id="mech-photo-preview"></div>
+          <div class="mech-note"><strong>Tip:</strong> use a clear portrait or workshop photo. This image is shown in mechanic listings and profile cards.</div>
+        </div>
+        <input class="fi" type="file" id="mech-photo" accept="image/*"/>
+      </div>
     </div>
     <div class="mft"><button class="btn bo" onclick="closeMod('mod-mechanic')">Cancel</button><button class="btn bp" onclick="saveMechanicAPI()">Save Mechanic</button></div>
   </div>
@@ -2623,15 +2747,19 @@ async function deleteSelectedProducts(){
   await loadProductsFromAPI();
 }
 function filterProducts(v){renderProducts(v);}
+function setProductEmojiSelection(value){
+  document.querySelectorAll('#emoji-picker span').forEach(s=>s.classList.toggle('active',s.textContent.trim()===value));
+}
 function openAddProduct(){
   document.getElementById('prod-modal-title').textContent='Add Product';
   document.getElementById('prod-edit-idx').value=-1;
   ['prod-name','prod-price','prod-stock','prod-desc'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('prod-emoji').value='🔧';
+  document.getElementById('prod-cat').value='Parts';
   clearAdminProdImgs();
   resetBrandList([]);
   resetSizeList([]);
-  document.querySelectorAll('#emoji-picker span').forEach((s,i)=>s.style.border=i===0?'2px solid var(--p)':'2px solid transparent');
+  setProductEmojiSelection('🔧');
   openMod('mod-product');
 }
 function editProduct(id){
@@ -2652,10 +2780,10 @@ function editProduct(id){
   document.getElementById('prod-existing-img2').value=p.image_url2||'';
   document.getElementById('prod-existing-img3').value=p.image_url3||'';
   clearAdminProdImgs();
-  if(p.img||p.image_url){const prev1=document.getElementById('prodAdminSlotPreview1');if(prev1){prev1.innerHTML='<img src="'+(p.img||p.image_url)+'" style="width:100%;height:100%;object-fit:cover;border-radius:8px;" alt=""/>';prev1.className='';}}
-  if(p.image_url2){const prev2=document.getElementById('prodAdminSlotPreview2');if(prev2){prev2.innerHTML='<img src="'+p.image_url2+'" style="width:100%;height:100%;object-fit:cover;border-radius:8px;" alt=""/>';prev2.className='';}}
-  if(p.image_url3){const prev3=document.getElementById('prodAdminSlotPreview3');if(prev3){prev3.innerHTML='<img src="'+p.image_url3+'" style="width:100%;height:100%;object-fit:cover;border-radius:8px;" alt=""/>';prev3.className='';}}
-  document.querySelectorAll('#emoji-picker span').forEach(s=>s.style.border=s.textContent.trim()===(p.emoji||p.image_icon)?'2px solid var(--p)':'2px solid transparent');
+  if(p.img||p.image_url){const prev1=document.getElementById('prodAdminSlotPreview1');if(prev1){prev1.innerHTML='<img src="'+(p.img||p.image_url)+'" alt=""/>';prev1.className='img-slot-media';}}
+  if(p.image_url2){const prev2=document.getElementById('prodAdminSlotPreview2');if(prev2){prev2.innerHTML='<img src="'+p.image_url2+'" alt=""/>';prev2.className='img-slot-media';}}
+  if(p.image_url3){const prev3=document.getElementById('prodAdminSlotPreview3');if(prev3){prev3.innerHTML='<img src="'+p.image_url3+'" alt=""/>';prev3.className='img-slot-media';}}
+  setProductEmojiSelection(p.emoji||p.image_icon||'🔧');
   openMod('mod-product');
 }
 function previewAdminProdImg(e, slotNum){
@@ -2664,8 +2792,8 @@ function previewAdminProdImg(e, slotNum){
   r.onload=ev=>{
     const preview=document.getElementById('prodAdminSlotPreview'+slotNum);
     if(preview){
-      preview.innerHTML='<img src="'+ev.target.result+'" style="width:100%;height:100%;object-fit:cover;border-radius:8px;" alt=""/>';
-      preview.className='';
+      preview.innerHTML='<img src="'+ev.target.result+'" alt=""/>';
+      preview.className='img-slot-media';
     }
   };r.readAsDataURL(file);
 }
@@ -2679,29 +2807,28 @@ function addBrandRow(data){
   const img2=data&&data.img2?data.img2:'';
   const img3=data&&data.img3?data.img3:'';
   const div=document.createElement('div');
-  div.className='brand-row';
-  div.style.cssText='display:flex;flex-direction:column;gap:8px;background:var(--bg3);padding:10px;border-radius:8px;border:1px solid var(--bdr);';
+  div.className='brand-row prod-dyn-card';
   div.innerHTML=`
-    <div style="display:flex;align-items:center;gap:8px;">
+    <div class="prod-dyn-top">
       <input type="text" class="fi brand-name-input" placeholder="Brand name (e.g. Motul)" value="${name}" style="flex:1;margin:0;min-width:80px;"/>
-      <div style="display:flex;align-items:center;gap:3px;flex-shrink:0;">
+      <div class="prod-price-box">
         <span style="font-size:12px;color:var(--mut);">₱</span>
         <input type="number" class="fi brand-price-input" placeholder="Price" value="${data&&data.price?data.price:''}" min="0" style="width:85px;margin:0;"/>
       </div>
-      <button type="button" onclick="this.closest('.brand-row').remove()" style="background:none;border:none;color:var(--err);font-size:18px;cursor:pointer;padding:0 4px;flex-shrink:0;">×</button>
+      <button type="button" onclick="this.closest('.brand-row').remove()" class="prod-remove-btn">×</button>
     </div>
-    <div style="display:flex;gap:8px;align-items:center;">
-      <span style="font-size:11px;color:var(--mut);font-weight:700;width:42px;flex-shrink:0;">Photos</span>
+    <div class="prod-mini-slots">
+      <span class="prod-mini-slots-label">Photos</span>
       ${[1,2,3].map(n=>{
         const cur=[img,img2,img3][n-1];
-        return `<label style="width:56px;height:56px;border-radius:8px;border:2px dashed var(--bdr);cursor:pointer;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:var(--bg);position:relative;" title="Photo ${n}">
+        return `<label class="prod-mini-slot" title="Photo ${n}">
           <input type="file" accept="image/*" style="display:none;" onchange="previewBrandImg(this,${n})"/>
           <input type="hidden" class="brand-img-data-${n}" value=""/>
           <input type="hidden" class="brand-existing-img-${n}" value="${cur}"/>
-          <div class="brand-img-preview-${n}" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
-            ${cur?`<img src="${cur}" style="width:100%;height:100%;object-fit:cover;border-radius:6px;"/>`:`<div style="text-align:center;color:var(--mut);font-size:10px;"><i class="fas fa-camera" style="font-size:14px;display:block;margin-bottom:2px;"></i>${n}</div>`}
+          <div class="brand-img-preview-${n} prod-mini-slot-preview">
+            ${cur?`<img src="${cur}"/>`:`<div class="prod-mini-slot-empty"><i class="fas fa-camera"></i>${n}</div>`}
           </div>
-          ${cur?`<div onclick="event.preventDefault();event.stopPropagation();clearBrandImg(this,${n})" style="position:absolute;top:2px;right:2px;background:rgba(0,0,0,0.55);color:#fff;border-radius:50%;width:16px;height:16px;font-size:9px;display:flex;align-items:center;justify-content:center;cursor:pointer;">×</div>`:''}
+          ${cur?`<div onclick="event.preventDefault();event.stopPropagation();clearBrandImg(this,${n})" class="prod-mini-remove">×</div>`:''}
         </label>`;
       }).join('')}
     </div>
@@ -2712,7 +2839,7 @@ function clearBrandImg(btn,n){
   const row=btn.closest('.brand-row');
   row.querySelector('.brand-img-data-'+n).value='';
   row.querySelector('.brand-existing-img-'+n).value='';
-  row.querySelector('.brand-img-preview-'+n).innerHTML=`<div style="text-align:center;color:var(--mut);font-size:10px;"><i class="fas fa-camera" style="font-size:14px;display:block;margin-bottom:2px;"></i>${n}</div>`;
+  row.querySelector('.brand-img-preview-'+n).innerHTML=`<div class="prod-mini-slot-empty"><i class="fas fa-camera"></i>${n}</div>`;
   btn.remove();
 }
 function previewBrandImg(inp,n){
@@ -2733,7 +2860,7 @@ function previewBrandImg(inp,n){
     URL.revokeObjectURL(url);
     const base64=canvas.toDataURL('image/jpeg',0.75);
     row.querySelector('.brand-img-data-'+n).value=base64;
-    row.querySelector('.brand-img-preview-'+n).innerHTML=`<img src="${base64}" style="width:100%;height:100%;object-fit:cover;border-radius:6px;"/>`;
+    row.querySelector('.brand-img-preview-'+n).innerHTML=`<img src="${base64}"/>`;
   };
   img.src=url;
 }
@@ -2751,15 +2878,14 @@ function addSizeRow(data){
   const label=data&&data.label?data.label:'';
   const price=data&&data.price?data.price:'';
   const div=document.createElement('div');
-  div.className='size-row';
-  div.style.cssText='display:flex;align-items:center;gap:8px;background:var(--bg3);padding:8px;border-radius:8px;border:1px solid var(--bdr);';
+  div.className='size-row prod-dyn-card';
   div.innerHTML=`
     <input type="text" class="fi size-label-input" placeholder="Size (e.g. 1L, 17inch)" value="${label}" style="flex:1;margin:0;"/>
-    <div style="display:flex;align-items:center;gap:4px;flex-shrink:0;">
+    <div class="prod-price-box">
       <span style="font-size:13px;color:var(--mut);">P</span>
       <input type="number" class="fi size-price-input" placeholder="Price (optional)" value="${price}" min="0" style="width:110px;margin:0;"/>
     </div>
-    <button type="button" onclick="this.closest('.size-row').remove()" style="background:none;border:none;color:var(--err);font-size:18px;cursor:pointer;padding:0 4px;flex-shrink:0;">×</button>
+    <button type="button" onclick="this.closest('.size-row').remove()" class="prod-remove-btn">×</button>
   `;
   list.appendChild(div);
 }
@@ -2779,9 +2905,8 @@ function clearAdminProdImgs(){
   });
 }
 function selectEmoji(el){
-  document.querySelectorAll('#emoji-picker span').forEach(s=>s.style.border='2px solid transparent');
-  el.style.border='2px solid var(--p)';
   const em=el.textContent.trim();
+  setProductEmojiSelection(em);
   document.getElementById('prod-emoji').value=em;
   // emoji selected (shown in emoji picker highlight only)
 }
@@ -3251,32 +3376,8 @@ let pdQtyVal         = 1;
 let pdCountdownRef   = null;
 
 function _dashOpenProduct(pid, e) {
-  console.group('%c[DEBUG] _dashOpenProduct CALLED', 'color:orange;font-weight:bold');
-  console.log('pid value:', pid, '| typeof pid:', typeof pid);
-  console.log('products array length:', products ? products.length : 'NULL/UNDEFINED');
-  console.log('products array:', JSON.stringify((products||[]).map(p=>({id:p.id,idType:typeof p.id,name:p.name}))));
-  console.log('_dashProdMap keys:', window._dashProdMap ? Object.keys(window._dashProdMap) : 'NOT SET');
-  console.log('_dashProdMap[pid]:', window._dashProdMap ? window._dashProdMap[pid] : 'N/A');
-  console.groupEnd();
-
-  if(!products) window.products = [];
-  var inProducts = products.find(function(x){ return x.id === pid; });
-  console.log('[DEBUG] products.find result (strict ===):', inProducts ? 'FOUND id='+inProducts.id : 'NOT FOUND');
-  console.log('[DEBUG] Manual id comparison check:');
-  (products||[]).forEach(function(x){
-    console.log('  products id:', x.id, '('+typeof x.id+') === pid:', pid, '('+typeof pid+') ?', x.id === pid, '  == ?', x.id == pid);
-  });
-
-  if(!inProducts && window._dashProdMap && window._dashProdMap[pid]) {
-    var cached = window._dashProdMap[pid];
-    if(!cached.img && cached.image_url) cached.img = cached.image_url;
-    if(!cached.cat && cached.category)  cached.cat = cached.category;
-    if(!cached.desc && cached.description) cached.desc = cached.description;
-    if(cached.stock === undefined && cached.quantity !== undefined) cached.stock = cached.quantity;
-    products.push(cached);
-    console.log('[DEBUG] Injected product', pid, 'from _dashProdMap into products[]');
-  }
-  openProductDetail(pid, e);
+  if(e) e.stopPropagation();
+  return;
 }
 
 function openProductDetail(pid, e){
@@ -4038,14 +4139,14 @@ async function loadDashboardRankings(){
     var numColor = numColors[i] || 'var(--mut)';
     var img = p.image_url || p.img || '';
     var imgSrc = img && /^(https?:\/\/|\/|data:)/.test(img) ? img : (img ? '/images/'+img : FALLBACK_IMG);
-    return '<div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--bdr);cursor:pointer" onclick="_dashOpenProduct('+p.id+',event)">'
-      +'<div style="font-size:1rem;font-weight:900;color:'+numColor+';min-width:22px;text-align:center">'+medal+'</div>'
-      +'<img src="'+imgSrc+'" style="width:38px;height:38px;border-radius:6px;object-fit:cover;border:1px solid var(--bdr)" onerror="this.src=this.dataset.fb" data-fb="'+FALLBACK_IMG+'"/>'
+    return '<div class="rank-item">'
+      +'<div class="rank-num '+(i===0?'r1':i===1?'r2':i===2?'r3':'')+'" style="color:'+((i>2)?'var(--mut)':'#fff')+'">'+medal+'</div>'
+      +'<img src="'+imgSrc+'" style="width:38px;height:38px;border-radius:6px;object-fit:cover;border:1px solid var(--bdr);flex-shrink:0;" onerror="this.src=this.dataset.fb" data-fb="'+FALLBACK_IMG+'"/>'
       +'<div style="flex:1;min-width:0;">'
         +'<div style="font-size:0.78rem;font-weight:800;color:var(--dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+p.name+'</div>'
-        +'<div style="font-size:0.7rem;margin-top:2px;">'+scoreHtml+'</div>'
+        +'<div style="font-size:0.7rem;color:var(--mut);margin-top:2px;">'+scoreHtml+'</div>'
       +'</div>'
-      +'<div style="font-size:0.78rem;font-weight:900;color:var(--p)">₱'+parseFloat(p.price).toLocaleString()+'</div>'
+      +'<div style="font-size:0.78rem;font-weight:900;color:var(--p);flex-shrink:0;">₱'+parseFloat(p.price).toLocaleString()+'</div>'
     +'</div>';
   }
 

@@ -8,6 +8,7 @@ const requireAuth = async (req, res, next) => {
     if (!token) return res.status(401).json({ success: false, message: 'Authorization token required' });
     const decoded = JSON.parse(Buffer.from(token, 'base64').toString());
     req.userId = decoded.id;
+    req.userName = decoded.name || decoded.email || 'Customer';
     next();
   } catch (e) {
     return res.status(401).json({ success: false, message: 'Invalid token' });
@@ -23,9 +24,14 @@ router.post('/submit', requireAuth, async (req, res) => {
     const typeNorm = type ? (type.charAt(0).toUpperCase() + type.slice(1).toLowerCase()) : 'Complaint';
     const validType = ['Complaint','Feedback','Request'].includes(typeNorm) ? typeNorm : 'Complaint';
     const conn = await pool.getConnection();
-    await conn.query(
+    const [result] = await conn.query(
       'INSERT INTO complaints (customer_id, type, subject, message, status) VALUES (?, ?, ?, ?, ?)',
       [req.userId, validType, subject || null, message, 'open']
+    );
+    // Seed the thread with the customer's opening message so it shows in the conversation history
+    await conn.query(
+      'INSERT INTO complaint_messages (complaint_id, sender_role, sender_name, message) VALUES (?,?,?,?)',
+      [result.insertId, 'customer', req.userName, message]
     );
     conn.release();
     console.log('Complaint saved: type=' + validType + ' user=' + req.userId);
@@ -36,7 +42,7 @@ router.post('/submit', requireAuth, async (req, res) => {
   }
 });
 
-// GET /api/complaints  — get logged-in user's complaints + notifications
+// GET /api/complaints  — get logged-in user's complaints, each with its full message thread
 router.get('/', requireAuth, async (req, res) => {
   try {
     const conn = await pool.getConnection();
@@ -44,10 +50,45 @@ router.get('/', requireAuth, async (req, res) => {
       'SELECT * FROM complaints WHERE customer_id = ? ORDER BY created_at DESC',
       [req.userId]
     );
+    if (complaints.length) {
+      const ids = complaints.map(c => c.id);
+      const [msgs] = await conn.query(
+        `SELECT * FROM complaint_messages WHERE complaint_id IN (?) ORDER BY created_at ASC`,
+        [ids]
+      );
+      const byComplaint = {};
+      msgs.forEach(m => { (byComplaint[m.complaint_id] = byComplaint[m.complaint_id] || []).push(m); });
+      complaints.forEach(c => { c.messages = byComplaint[c.id] || []; });
+    }
     conn.release();
     res.json({ success: true, data: complaints });
   } catch (error) {
     console.error('Get complaints error:', error);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+});
+
+// POST /api/complaints/:id/reply  — customer sends a follow-up message on their own submission
+router.post('/:id/reply', requireAuth, async (req, res) => {
+  try {
+    const { message } = req.body;
+    if (!message || !message.trim()) return res.json({ success: false, message: 'Message is required' });
+    const conn = await pool.getConnection();
+    // Make sure this complaint actually belongs to the requesting customer
+    const [owner] = await conn.query('SELECT id, status FROM complaints WHERE id=? AND customer_id=?', [req.params.id, req.userId]);
+    if (!owner.length) { conn.release(); return res.json({ success: false, message: 'Submission not found' }); }
+    await conn.query(
+      'INSERT INTO complaint_messages (complaint_id, sender_role, sender_name, message) VALUES (?,?,?,?)',
+      [req.params.id, 'customer', req.userName, message.trim()]
+    );
+    // A follow-up from the customer means it needs another look from admin
+    if (owner[0].status === 'resolved') {
+      await conn.query("UPDATE complaints SET status='open' WHERE id=?", [req.params.id]);
+    }
+    conn.release();
+    res.json({ success: true, message: 'Reply sent' });
+  } catch (error) {
+    console.error('Customer reply error:', error);
     res.status(500).json({ success: false, message: 'Server error' });
   }
 });
@@ -195,4 +236,19 @@ router.get('/my-likes/:productId', requireAuth, async (req, res) => {
     res.json({success:false, liked:[]});
   }
 });
+// DELETE /api/complaints/:id  — customer removes their own submission (and its message thread)
+router.delete('/:id', requireAuth, async (req, res) => {
+  try {
+    const conn = await pool.getConnection();
+    const [owner] = await conn.query('SELECT id FROM complaints WHERE id=? AND customer_id=?', [req.params.id, req.userId]);
+    if (!owner.length) { conn.release(); return res.json({ success: false, message: 'Submission not found' }); }
+    await conn.query('DELETE FROM complaints WHERE id=?', [req.params.id]); // complaint_messages rows cascade-delete
+    conn.release();
+    res.json({ success: true, message: 'Submission deleted' });
+  } catch (error) {
+    console.error('Delete complaint error:', error);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+});
+
 module.exports = router;

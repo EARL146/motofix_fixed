@@ -73,18 +73,19 @@
 
 /* ===== COMPLAINTS & REQUESTS ===== */
 .complaint-card {
-  background: var(--bg3);
-  border: 1px solid var(--bd);
-  border-radius: 10px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--bg3) 88%, var(--or) 12%) 0%, var(--bg3) 100%);
+  border: 1px solid color-mix(in srgb, var(--bd) 78%, var(--or) 22%);
+  border-radius: 14px;
   padding: 14px;
-  margin-bottom: 10px
+  margin-bottom: 12px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12)
 }
 
 .complaint-card-head {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px
+  margin-bottom: 10px
 }
 
 .complaint-type {
@@ -132,8 +133,8 @@
 }
 
 .complaint-msg {
-  font-size: 0.83rem;
-  color: var(--tx2);
+  font-size: 0.84rem;
+  color: var(--tx);
   margin-bottom: 6px;
   line-height: 1.5
 }
@@ -144,15 +145,16 @@
 }
 
 .complaint-form-card {
-  background: var(--bg3);
-  border: 1px dashed var(--or);
-  border-radius: 10px;
+  background: linear-gradient(165deg, color-mix(in srgb, var(--bg2) 90%, var(--or) 10%) 0%, var(--bg3) 60%);
+  border: 1.5px solid color-mix(in srgb, var(--or) 62%, var(--bd) 38%);
+  border-radius: 14px;
   padding: 16px;
-  margin-bottom: 16px
+  margin-bottom: 16px;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12)
 }
 
 .complaint-form-card h4 {
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   font-weight: 900;
   color: var(--tx);
   margin-bottom: 12px;
@@ -169,16 +171,50 @@
 
 .ctype-btn {
   flex: 1;
-  padding: 8px 6px;
+  padding: 9px 6px;
   border: 2px solid var(--bd);
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
-  font-size: 0.75rem;
+  font-size: 0.76rem;
   font-weight: 800;
   transition: all 0.2s;
   background: var(--bg4);
   color: var(--tx2);
   text-align: center
+}
+
+.complaint-input,
+.complaint-textarea {
+  width: 100%;
+  background: var(--bg4);
+  border: 1.5px solid var(--bd);
+  border-radius: 10px;
+  padding: 11px 14px;
+  color: var(--tx);
+  font-size: 0.88rem;
+  outline: none;
+  font-family: 'Nunito', sans-serif;
+  transition: border-color 0.2s, box-shadow 0.2s
+}
+
+.complaint-input:focus,
+.complaint-textarea:focus {
+  border-color: var(--or);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--or) 18%, transparent)
+}
+
+.complaint-textarea {
+  resize: vertical;
+  min-height: 92px
+}
+
+.complaints-title {
+  font-size: 0.79rem;
+  font-weight: 900;
+  color: var(--tx2);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin: 0 0 10px
 }
 
 .ctype-btn:hover {
@@ -3705,15 +3741,30 @@ img {
 
 /* Panel cards grid */
 .panel-card {
-  background: var(--bg2);
-  border: 1px solid var(--bd);
-  border-radius: 14px;
+  background: linear-gradient(175deg, color-mix(in srgb, var(--bg2) 90%, var(--or) 10%) 0%, var(--bg2) 52%);
+  border: 1px solid color-mix(in srgb, var(--bd) 76%, var(--or) 24%);
+  border-radius: 16px;
   padding: 18px 20px;
   margin-bottom: 16px;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.14);
+  position: relative;
+  overflow: hidden;
+}
+
+.panel-card::after {
+  content: '';
+  position: absolute;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  top: -72px;
+  right: -62px;
+  background: color-mix(in srgb, var(--or) 16%, transparent);
+  pointer-events: none
 }
 
 .panel-card-title {
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   font-weight: 900;
   color: var(--or);
   letter-spacing: 0.8px;
@@ -3755,19 +3806,20 @@ img {
   width: 100%;
   background: var(--bg3);
   border: 1.5px solid var(--bd);
-  border-radius: 8px;
-  padding: 10px 14px;
+  border-radius: 10px;
+  padding: 11px 14px;
   color: var(--tx);
   font-size: 0.92rem;
   outline: none;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
   font-family: 'Nunito', sans-serif
 }
 
 .fg input:focus,
 .fg select:focus,
 .fg textarea:focus {
-  border-color: var(--or)
+  border-color: var(--or);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--or) 18%, transparent)
 }
 
 .fg textarea {
@@ -3776,20 +3828,22 @@ img {
 }
 
 .save-btn {
-  background: var(--or);
+  background: linear-gradient(135deg, var(--or) 0%, var(--or2) 100%);
   color: #fff;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   padding: 11px 24px;
   font-weight: 900;
   font-size: 0.9rem;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: transform 0.18s, box-shadow 0.18s, background 0.2s;
+  box-shadow: 0 8px 16px color-mix(in srgb, var(--or) 38%, transparent);
   font-family: 'Nunito', sans-serif
 }
 
 .save-btn:hover {
-  background: var(--or2)
+  background: linear-gradient(135deg, var(--or2) 0%, var(--or) 100%);
+  transform: translateY(-1px)
 }
 
 .danger-btn {
@@ -3811,11 +3865,12 @@ img {
 
 /* ORDER CARDS */
 .order-card {
-  background: var(--bg3);
-  border: 1px solid var(--bd);
-  border-radius: 10px;
+  background: linear-gradient(170deg, color-mix(in srgb, var(--bg3) 90%, var(--or) 10%) 0%, var(--bg3) 70%);
+  border: 1px solid color-mix(in srgb, var(--bd) 75%, var(--or) 25%);
+  border-radius: 12px;
   padding: 14px;
-  margin-bottom: 12px
+  margin-bottom: 12px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1)
 }
 
 .order-head {
@@ -3913,7 +3968,7 @@ img {
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  padding: 40px 20px;
+  padding: 42px 20px;
   color: var(--tx2)
 }
 
@@ -3926,31 +3981,33 @@ img {
 .fav-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 10px
+  gap: 12px
 }
 
 .fav-card {
   background: var(--bg3);
-  border: 1px solid var(--bd);
-  border-radius: 10px;
+  border: 1px solid color-mix(in srgb, var(--bd) 74%, var(--or) 26%);
+  border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
   position: relative
 }
 
 .fav-card:hover {
-  border-color: var(--or)
+  border-color: var(--or);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.12)
 }
 
 .fav-card img {
   width: 100%;
-  height: 100px;
+  height: 116px;
   object-fit: cover
 }
 
 .fav-card-info {
-  padding: 8px
+  padding: 10px 10px 11px
 }
 
 .fav-card-name {
@@ -3985,13 +4042,18 @@ img {
 
 /* SETTINGS */
 .settings-section {
-  margin-bottom: 24px
+  margin-bottom: 18px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--bg3) 88%, var(--or) 12%) 0%, var(--bg3) 100%);
+  border: 1px solid color-mix(in srgb, var(--bd) 76%, var(--or) 24%);
+  border-radius: 14px;
+  padding: 14px 14px 16px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1)
 }
 
 .settings-section h3 {
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 900;
-  color: var(--tx2);
+  color: var(--tx);
   letter-spacing: 1px;
   text-transform: uppercase;
   margin-bottom: 12px
@@ -4005,7 +4067,7 @@ img {
 
 .theme-btn {
   padding: 10px;
-  border-radius: 8px;
+  border-radius: 10px;
   border: 2px solid var(--bd);
   cursor: pointer;
   font-size: 0.82rem;
@@ -4042,7 +4104,7 @@ img {
 
 .lang-btn {
   padding: 10px;
-  border-radius: 8px;
+  border-radius: 10px;
   border: 2px solid var(--bd);
   cursor: pointer;
   font-size: 0.82rem;
@@ -4062,6 +4124,162 @@ img {
 .lang-btn.active {
   border-color: var(--or);
   background: rgba(238, 77, 45, 0.1)
+}
+
+.panel-head-real {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--bd);
+  display: flex;
+  align-items: center;
+  justify-content: space-between
+}
+
+.panel-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px
+}
+
+.panel-home-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--tx2);
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0
+}
+
+.panel-home-btn span {
+  color: var(--or)
+}
+
+.panel-breadcrumb-sep {
+  color: var(--tx2);
+  font-size: 0.65rem
+}
+
+.panel-title-compact {
+  font-size: 0.85rem;
+  color: var(--tx);
+  font-weight: 700
+}
+
+.panel-main-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--tx2);
+  font-size: 1.1rem;
+  padding: 4px 8px
+}
+
+.panel-mobile-avatar {
+  text-align: center;
+  padding: 20px 0 14px;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--bd);
+  margin-bottom: 8px
+}
+
+.panel-mobile-avatar-label {
+  display: inline-block;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  border: 3px solid var(--or);
+  box-shadow: 0 0 0 4px rgba(238, 77, 45, 0.18), 0 4px 18px rgba(0, 0, 0, 0.3)
+}
+
+.panel-mobile-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block
+}
+
+.panel-mobile-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s
+}
+
+.panel-mobile-avatar-label:hover .panel-mobile-overlay {
+  opacity: 1
+}
+
+.panel-mobile-name {
+  font-weight: 900;
+  font-size: 1rem;
+  color: var(--tx);
+  margin: 10px 0 2px
+}
+
+.panel-mobile-email {
+  font-size: 0.75rem;
+  color: var(--tx2);
+  margin: 0 0 6px
+}
+
+.panel-mobile-badge {
+  font-size: 0.7rem;
+  background: rgba(238, 77, 45, 0.13);
+  color: var(--or);
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-weight: 700
+}
+
+.panel-inline-note {
+  font-size: 0.7rem;
+  color: var(--tx2);
+  text-transform: none;
+  font-weight: 600;
+  margin-left: 4px
+}
+
+.panel-narrow {
+  max-width: 300px
+}
+
+.panel-narrow-sm {
+  max-width: 180px
+}
+
+.panel-tab-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0 6px
+}
+
+.panel-tab-note {
+  font-size: 0.8rem;
+  color: var(--tx2)
+}
+
+.panel-refresh-btn {
+  background: var(--bg4);
+  border: 1.5px solid var(--bd);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--or);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px
 }
 
 .lang-flag {
@@ -4802,11 +5020,12 @@ img {
 .auth-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.82);
+  background: rgba(0, 0, 0, 0.78);
+  backdrop-filter: blur(3px);
   z-index: 5000;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.2s;
+  transition: opacity 0.24s;
   display: flex;
   align-items: center;
   justify-content: center
@@ -4820,83 +5039,183 @@ img {
 .auth-box {
   background: var(--bg2);
   border: 1.5px solid var(--bd);
-  border-radius: 16px;
-  width: min(440px, 95vw);
-  padding: 36px 32px;
+  border-radius: 18px;
+  width: min(840px, 96vw);
+  min-height: 510px;
   position: relative;
-  box-shadow: 0 8px 48px rgba(0, 0, 0, 0.7);
-  transform: translateY(-20px);
-  transition: transform 0.3s ease
+  overflow: hidden;
+  box-shadow: var(--shadow-lg, 0 16px 40px rgba(0, 0, 0, 0.45));
+  transform: translateY(-22px) scale(0.98);
+  transition: transform 0.28s ease
 }
 
 .auth-overlay.active .auth-box {
-  transform: translateY(0)
+  transform: translateY(0) scale(1)
+}
+
+.auth-layout {
+  display: grid;
+  grid-template-columns: minmax(260px, 1.02fr) minmax(320px, 1fr);
+  min-height: 510px;
+}
+
+.auth-side {
+  position: relative;
+  padding: 36px 30px;
+  background:
+    radial-gradient(circle at 20% 16%, rgba(255, 255, 255, 0.14), transparent 42%),
+    linear-gradient(145deg, var(--or3), var(--or2));
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.auth-side::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(140deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.28));
+  pointer-events: none;
+}
+
+.auth-side-main,
+.auth-side-foot {
+  position: relative;
+  z-index: 1;
+}
+
+.auth-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 24px;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 999px;
+  padding: 7px 12px;
+  width: fit-content;
+}
+
+.auth-logo img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.auth-logo span {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.08rem;
+  letter-spacing: 0.9px;
+  color: #fff
+}
+
+.auth-side h2 {
+  font-size: 1.6rem;
+  line-height: 1.2;
+  font-weight: 900;
+  margin-bottom: 9px;
+}
+
+.auth-side p {
+  font-size: 0.92rem;
+  opacity: 0.95;
+  line-height: 1.55;
+  max-width: 34ch;
+}
+
+.auth-points {
+  margin-top: 20px;
+  display: grid;
+  gap: 8px;
+}
+
+.auth-points li {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.83rem;
+  font-weight: 700;
+}
+
+.auth-points li i {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.auth-trust {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  opacity: 0.9;
+}
+
+.auth-panel {
+  position: relative;
+  padding: 30px 30px 28px;
+  background: var(--bg2);
 }
 
 .auth-close {
   position: absolute;
-  top: 14px;
-  right: 14px;
+  top: 12px;
+  right: 12px;
   background: var(--bg3);
-  border: none;
+  border: 1px solid var(--bd);
   color: var(--tx2);
-  width: 28px;
-  height: 28px;
+  width: 31px;
+  height: 31px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: 0.85rem;
-  transition: background 0.2s
+  font-size: 0.82rem;
+  transition: all 0.2s
 }
 
 .auth-close:hover {
-  background: #e44;
-  color: #fff
-}
-
-.auth-logo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin-bottom: 20px
-}
-
-.auth-logo i {
-  color: var(--or);
-  font-size: 1.5rem
-}
-
-.auth-logo span {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 1.2rem;
-  letter-spacing: 1px;
-  color: var(--tx)
+  background: var(--or);
+  border-color: var(--or);
+  color: #fff;
 }
 
 .auth-tabs {
+  background: var(--bg3);
+  border: 1px solid var(--bd);
+  border-radius: 12px;
+  padding: 4px;
   display: flex;
-  border-bottom: 1px solid var(--bd);
-  margin-bottom: 24px
+  margin: 26px 0 20px
 }
 
 .auth-tab {
   flex: 1;
-  padding: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
   text-align: center;
   font-weight: 800;
-  font-size: 0.9rem;
+  font-size: 0.84rem;
+  letter-spacing: 0.2px;
   color: var(--tx2);
   cursor: pointer;
-  border-bottom: 2px solid transparent;
   transition: all 0.2s
 }
 
 .auth-tab.active {
-  color: var(--or);
-  border-bottom-color: var(--or)
+  color: #fff;
+  background: var(--or);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.14)
 }
 
 .auth-form {
@@ -4907,22 +5226,86 @@ img {
   display: block
 }
 
+.auth-form-head {
+  margin-bottom: 12px;
+}
+
+.auth-form-head h3 {
+  font-size: 1.18rem;
+  font-weight: 900;
+  color: var(--tx);
+  margin-bottom: 3px;
+}
+
+.auth-form-head p {
+  font-size: 0.82rem;
+  color: var(--tx2);
+}
+
+.auth-box .af-group {
+  margin-bottom: 12px;
+}
+
+.auth-box .af-group label {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--tx2);
+  margin-bottom: 5px;
+}
+
+.af-field {
+  position: relative;
+}
+
+.af-field i {
+  position: absolute;
+  left: 13px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.84rem;
+  color: var(--tx2);
+  pointer-events: none;
+}
+
+.auth-box .af-group .af-field input {
+  background: var(--bg3);
+  border: 1.5px solid var(--bd);
+  border-radius: 10px;
+  min-height: 43px;
+  padding: 10px 12px 10px 38px;
+  font-size: 0.89rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.auth-box .af-group .af-field input:focus {
+  border-color: var(--or);
+  box-shadow: 0 0 0 3px rgba(238, 77, 45, 0.15);
+}
+
+.auth-box .af-err,
+.auth-box .af-success {
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+
 .af-submit {
   width: 100%;
-  background: var(--or);
+  background: linear-gradient(135deg, var(--or), var(--or2));
   color: #fff;
   border: none;
-  border-radius: 9px;
+  border-radius: 10px;
   padding: 12px;
   font-weight: 900;
-  font-size: 0.95rem;
-  margin-top: 6px;
-  transition: background 0.2s;
+  font-size: 0.88rem;
+  letter-spacing: 0.25px;
+  margin-top: 2px;
+  transition: transform 0.16s, filter 0.2s;
   font-family: 'Nunito', sans-serif
 }
 
 .af-submit:hover {
-  background: var(--or2)
+  filter: brightness(1.05);
+  transform: translateY(-1px)
 }
 
 .af-success {
@@ -4934,6 +5317,240 @@ img {
 
 .af-success.show {
   display: block
+}
+
+.auth-forgot-wrap {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.auth-forgot {
+  color: var(--or);
+  font-size: 0.79rem;
+  font-weight: 800;
+}
+
+@media(max-width:860px) {
+  .auth-box {
+    width: min(460px, 95vw);
+    min-height: auto;
+  }
+
+  .auth-layout {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .auth-side {
+    padding: 24px 22px 20px;
+    min-height: 170px;
+  }
+
+  .auth-side h2 {
+    font-size: 1.24rem;
+  }
+
+  .auth-side p,
+  .auth-side .auth-points,
+  .auth-side .auth-trust {
+    display: none;
+  }
+
+  .auth-panel {
+    padding: 22px 20px 20px;
+  }
+
+  .auth-tabs {
+    margin-top: 16px;
+  }
+}
+
+/* FORGOT PASSWORD MODAL */
+.forgot-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.78);
+  backdrop-filter: blur(3px);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.forgot-card {
+  width: min(430px, 100%);
+  background: var(--bg2);
+  border: 1.5px solid var(--bd);
+  border-radius: 16px;
+  padding: 24px 22px 22px;
+  position: relative;
+  box-shadow: var(--shadow-lg, 0 16px 40px rgba(0, 0, 0, 0.34));
+}
+
+.forgot-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--bd);
+  background: var(--bg3);
+  color: var(--tx2);
+  font-size: 0.84rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.forgot-close:hover {
+  background: var(--or);
+  color: #fff;
+  border-color: var(--or);
+}
+
+.forgot-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.forgot-head-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(255, 90, 31, 0.12);
+  color: var(--or);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+}
+
+.forgot-title {
+  font-size: 1.08rem;
+  font-weight: 900;
+  color: var(--tx);
+  margin-bottom: 4px;
+}
+
+.forgot-sub {
+  color: var(--tx2);
+  font-size: 0.81rem;
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.forgot-user {
+  color: var(--or);
+  font-weight: 800;
+}
+
+.forgot-field {
+  margin-bottom: 12px;
+}
+
+.forgot-field label {
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: var(--tx2);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.forgot-input-wrap {
+  position: relative;
+}
+
+.forgot-input-wrap i {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  color: var(--tx2);
+  font-size: 0.82rem;
+  pointer-events: none;
+}
+
+.forgot-input-wrap input {
+  width: 100%;
+  padding: 11px 12px 11px 36px;
+  background: var(--bg3);
+  border: 1.5px solid var(--bd);
+  border-radius: 9px;
+  color: var(--tx);
+  font-size: 0.88rem;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.forgot-input-wrap input:focus {
+  border-color: var(--or);
+  box-shadow: 0 0 0 3px rgba(238, 77, 45, 0.14);
+}
+
+.forgot-err {
+  display: none;
+  color: #ef4444;
+  font-size: 0.76rem;
+  margin: 2px 0 10px;
+  padding: 8px 11px;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  border-radius: 7px;
+}
+
+.forgot-btn {
+  width: 100%;
+  padding: 11px;
+  border: none;
+  border-radius: 9px;
+  background: linear-gradient(135deg, var(--or), var(--or2));
+  color: #fff;
+  font-size: 0.86rem;
+  font-weight: 900;
+  cursor: pointer;
+  letter-spacing: 0.2px;
+  transition: transform 0.16s, filter 0.2s;
+}
+
+.forgot-btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+}
+
+.forgot-success {
+  display: none;
+  text-align: center;
+}
+
+.forgot-success-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  margin: 0 auto 12px;
+  background: rgba(34, 197, 94, 0.14);
+  color: #22c55e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.55rem;
+}
+
+.forgot-login-btn {
+  margin-top: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background: var(--or);
+  color: #fff;
+  font-size: 0.84rem;
+  font-weight: 800;
+  cursor: pointer;
 }
 
 /* ORDER AUTH POPUP */
@@ -7093,7 +7710,7 @@ img {
     <div class="hero-slide" style="background:linear-gradient(rgba(0,0,0,0.55),rgba(0,0,0,0.55)),url('https://images.pexels.com/photos/2611685/pexels-photo-2611685.jpeg?auto=compress&cs=tinysrgb&w=1200&h=400&fit=crop') center/cover no-repeat;">
       <div class="slide-content"><p class="slide-tag">💡 New Arrivals</p><h1>LED LIGHTING<br/><span>COLLECTION</span></h1><p class="slide-desc">Ultra-bright, plug-and-play LED upgrades for your ride</p><button class="slide-btn" onclick="filterCat('Lights')">View Lights <i class="fas fa-arrow-right"></i></button></div>
     </div>
-    <div class="hero-dots" style="position:absolute;bottom:14px;left:0;right:0;display:flex;justify-content:center;align-items:center;gap:8px;z-index:10;">
+    <div class="hero-dots hero-dots-abs">
       <span class="dot active" onclick="goSlide(0)"></span>
       <span class="dot" onclick="goSlide(1)"></span>
       <span class="dot" onclick="goSlide(2)"></span>
@@ -7159,14 +7776,14 @@ img {
 
 <!-- MECHANICS SECTION -->
 <section class="mechanics-section" id="mechanicsSection" style="padding:24px;background:var(--bg2);margin-top:2px">
-  <div class="section-header" style="margin-bottom:8px">
-    <h2 style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:2px;color:var(--tx)"><i class="fas fa-user-gear" style="color:var(--or);margin-right:8px"></i> Our Mechanics</h2>
-    <span style="color:var(--tx2);font-size:0.85rem">Trusted & verified professionals</span>
+  <div class="section-header mechanics-header">
+    <h2 class="mechanics-title"><i class="fas fa-user-gear"></i> Our Mechanics</h2>
+    <span class="mechanics-subtitle">Trusted & verified professionals</span>
   </div>
-  <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;padding:10px 14px;background:linear-gradient(135deg,rgba(238,77,45,.08),rgba(245,158,11,.08));border-radius:10px;border:1px solid rgba(238,77,45,.15);">
-    <span style="font-size:1.2rem">🏆</span>
-    <span style="font-size:0.82rem;font-weight:700;color:var(--tx)">Top Mechanics ranked by jobs completed & customer ratings</span>
-    <span style="margin-left:auto;font-size:0.75rem;color:var(--or);font-weight:800;">🥇🥈🥉 = Top 3</span>
+  <div class="mechanics-rank-note">
+    <span class="mechanics-rank-icon">🏆</span>
+    <span class="mechanics-rank-text">Top Mechanics ranked by jobs completed & customer ratings</span>
+    <span class="mechanics-rank-top">🥇🥈🥉 = Top 3</span>
   </div>
   <div class="mechanics-grid" id="mechanicsGrid"></div>
 </section>
@@ -7195,7 +7812,7 @@ img {
         <i class="fas fa-user-gear" style="color:#3b82f6;font-size:0.75rem"></i> Top Mechanics
       </div>
     </div>
-    <span style="font-size:0.72rem;color:var(--tx2)" id="rankingTopLabel">Top 10 Products</span>
+    <span class="ranking-top-label" id="rankingTopLabel">Top 10 Products</span>
   </div>
   <div class="ranking-scroll" id="rankingList"></div>
 </section>
@@ -7258,29 +7875,95 @@ img {
 <!-- AUTH MODAL -->
 <div class="auth-overlay" id="authOverlay">
   <div class="auth-box">
-    <button class="auth-close" onclick="closeAuth()"><i class="fas fa-times"></i></button>
+    <div class="auth-layout">
+      <aside class="auth-side">
+        <div class="auth-side-main">
+          <div class="auth-logo"><img src="motomarket_logo.png" alt="MotoMarket Logo"><span>MotoMarket Secure</span></div>
+          <h2>Ride Faster with One Account</h2>
+          <p>Login to track orders, save favorite parts, and get verified service updates in real time.</p>
+          <ul class="auth-points">
+            <li><i class="fas fa-check"></i> Quick checkout and order tracking</li>
+            <li><i class="fas fa-shield-halved"></i> Protected account and secure access</li>
+            <li><i class="fas fa-bell"></i> Instant notifications for updates</li>
+          </ul>
+        </div>
+        <div class="auth-side-foot">
+          <span class="auth-trust"><i class="fas fa-lock"></i> Trusted by riders across Metro</span>
+        </div>
+      </aside>
 
-    <div class="auth-tabs">
-      <div class="auth-tab active" id="tabLogin" onclick="switchTab('login')" data-i18n="login">Login</div>
-      <div class="auth-tab" id="tabReg" onclick="switchTab('register')" data-i18n="create_account">Create Account</div>
-    </div>
-    <div class="auth-form active" id="formLogin">
-      <div class="af-group"><label data-i18n="email">Email Address</label><input type="email" id="liEmail" data-i18n-ph="email_ph"/></div>
-      <div class="af-group"><label data-i18n="password">Password</label><input type="password" id="liPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')submitLogin()"/></div>
-      <div class="af-err" id="liErr" data-i18n="invalid_login">Invalid email or password.</div>
-      <button class="af-submit" onclick="submitLogin()" data-i18n="login">Login</button>
-      <div style="text-align:center;margin-top:10px;">
-        <a href="#" onclick="openForgotModal();return false;" style="color:var(--or);font-size:0.82rem;font-weight:700;text-decoration:none;">Forgot Password?</a>
+      <div class="auth-panel">
+        <button class="auth-close" onclick="closeAuth()"><i class="fas fa-times"></i></button>
+
+        <div class="auth-tabs">
+          <div class="auth-tab active" id="tabLogin" onclick="switchTab('login')" data-i18n="login">Login</div>
+          <div class="auth-tab" id="tabReg" onclick="switchTab('register')" data-i18n="create_account">Create Account</div>
+        </div>
+
+        <div class="auth-form active" id="formLogin">
+          <div class="auth-form-head">
+            <h3>Welcome back</h3>
+            <p>Sign in to continue to your account.</p>
+          </div>
+          <div class="af-group">
+            <label data-i18n="email">Email Address</label>
+            <div class="af-field">
+              <i class="fas fa-envelope"></i>
+              <input type="email" id="liEmail" data-i18n-ph="email_ph"/>
+            </div>
+          </div>
+          <div class="af-group">
+            <label data-i18n="password">Password</label>
+            <div class="af-field">
+              <i class="fas fa-lock"></i>
+              <input type="password" id="liPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')submitLogin()"/>
+            </div>
+          </div>
+          <div class="af-err" id="liErr" data-i18n="invalid_login">Invalid email or password.</div>
+          <button class="af-submit" onclick="submitLogin()" data-i18n="login">Login</button>
+          <div class="auth-forgot-wrap">
+            <a href="#" class="auth-forgot" onclick="openForgotModal();return false;">Forgot Password?</a>
+          </div>
+        </div>
+
+        <div class="auth-form" id="formReg">
+          <div class="auth-form-head">
+            <h3>Create your account</h3>
+            <p>Join MotoMarket to save favorites and order faster.</p>
+          </div>
+          <div class="af-group">
+            <label data-i18n="full_name">Full Name</label>
+            <div class="af-field">
+              <i class="fas fa-user"></i>
+              <input type="text" id="riName" data-i18n-ph="name_ph"/>
+            </div>
+          </div>
+          <div class="af-group">
+            <label data-i18n="email">Email Address</label>
+            <div class="af-field">
+              <i class="fas fa-envelope"></i>
+              <input type="email" id="riEmail" data-i18n-ph="email_ph"/>
+            </div>
+          </div>
+          <div class="af-group">
+            <label data-i18n="phone">Phone Number</label>
+            <div class="af-field">
+              <i class="fas fa-phone"></i>
+              <input type="tel" id="riPhone" placeholder="09XXXXXXXXX"/>
+            </div>
+          </div>
+          <div class="af-group">
+            <label data-i18n="password">Password</label>
+            <div class="af-field">
+              <i class="fas fa-key"></i>
+              <input type="password" id="riPass" data-i18n-ph="pass_ph"/>
+            </div>
+          </div>
+          <div class="af-err" id="riErr" data-i18n="fill_all">Please fill all fields correctly.</div>
+          <div class="af-success" id="riOk">Account created! ✅</div>
+          <button class="af-submit" onclick="submitRegister()" data-i18n="create_account">Create Account</button>
+        </div>
       </div>
-    </div>
-    <div class="auth-form" id="formReg">
-      <div class="af-group"><label data-i18n="full_name">Full Name</label><input type="text" id="riName" data-i18n-ph="name_ph"/></div>
-      <div class="af-group"><label data-i18n="email">Email Address</label><input type="email" id="riEmail" data-i18n-ph="email_ph"/></div>
-      <div class="af-group"><label data-i18n="phone">Phone Number</label><input type="tel" id="riPhone" placeholder="09XXXXXXXXX"/></div>
-      <div class="af-group"><label data-i18n="password">Password</label><input type="password" id="riPass" data-i18n-ph="pass_ph"/></div>
-      <div class="af-err" id="riErr" data-i18n="fill_all">Please fill all fields correctly.</div>
-      <div class="af-success" id="riOk">Account created! ✅</div>
-      <button class="af-submit" onclick="submitRegister()" data-i18n="create_account">Create Account</button>
     </div>
   </div>
 </div>
@@ -7308,16 +7991,16 @@ img {
     <i class="fas fa-times" style="color:#fff;font-size:1.1rem;"></i>
   </div>
   <!-- HEADER — PC breadcrumb style -->
-  <div class="panel-head" style="background:var(--bg2);border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;" id="panelHead">
-    <div style="display:flex;align-items:center;gap:8px;">
-      <button onclick="closePanel()" style="background:none;border:none;cursor:pointer;color:var(--tx2);font-size:0.85rem;display:flex;align-items:center;gap:5px;padding:0;">
+  <div class="panel-head panel-head-real" id="panelHead">
+    <div class="panel-breadcrumb">
+      <button onclick="closePanel()" class="panel-home-btn">
         <i class="fas fa-home" style="color:var(--or)"></i>
-        <span style="color:var(--or)">MotoMarket</span>
+        <span>MotoMarket</span>
       </button>
-      <i class="fas fa-chevron-right" style="color:var(--tx2);font-size:0.65rem"></i>
-      <span id="panelTitle" style="font-size:0.85rem;color:var(--tx);font-weight:700">My Account</span>
+      <i class="fas fa-chevron-right panel-breadcrumb-sep"></i>
+      <span id="panelTitle" class="panel-title-compact">My Account</span>
     </div>
-    <button class="panel-close" onclick="closePanel()" style="background:none;border:none;cursor:pointer;color:var(--tx2);font-size:1.1rem;padding:4px 8px;">
+    <button class="panel-close panel-main-close" onclick="closePanel()">
       <i class="fas fa-times"></i>
     </button>
   </div>
@@ -7375,15 +8058,15 @@ img {
 
       <!-- Mobile avatar (hidden on PC via CSS) -->
       <div id="panelAvatarWrapMobile" style="display:block;">
-        <div style="text-align:center;padding:20px 0 14px;background:var(--bg2);border-bottom:1px solid var(--bd);margin-bottom:8px;">
-          <label style="display:inline-block;width:90px;height:90px;border-radius:50%;overflow:hidden;cursor:pointer;position:relative;border:3px solid var(--or);box-shadow:0 0 0 4px rgba(238,77,45,0.18),0 4px 18px rgba(0,0,0,0.3);">
-            <img id="panelAvatarMobile" src="" style="width:100%;height:100%;object-fit:cover;display:block;" alt=""/>
-            <div style="position:absolute;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0"><i class="fas fa-camera" style="color:#fff;font-size:1rem"></i></div>
+        <div class="panel-mobile-avatar">
+          <label class="panel-mobile-avatar-label">
+            <img id="panelAvatarMobile" src="" class="panel-mobile-avatar-img" alt=""/>
+            <div class="panel-mobile-overlay"><i class="fas fa-camera" style="color:#fff;font-size:1rem"></i></div>
             <input type="file" accept="image/*" style="display:none" onchange="handleAvatarUpload(this)"/>
           </label>
-          <p style="font-weight:900;font-size:1rem;color:var(--tx);margin:10px 0 2px" id="panelNameMobile"></p>
-          <p style="font-size:0.75rem;color:var(--tx2);margin:0 0 6px" id="panelEmailMobile"></p>
-          <span style="font-size:0.7rem;background:rgba(238,77,45,0.13);color:var(--or);padding:3px 10px;border-radius:20px;font-weight:700;"><i class="fas fa-motorcycle"></i> MotoMarket Member</span>
+          <p class="panel-mobile-name" id="panelNameMobile"></p>
+          <p class="panel-mobile-email" id="panelEmailMobile"></p>
+          <span class="panel-mobile-badge"><i class="fas fa-motorcycle"></i> MotoMarket Member</span>
         </div>
       </div>
     <!-- PROFILE TAB -->
@@ -7400,7 +8083,7 @@ img {
       </div>
       <!-- Delivery Address Card -->
       <div class="panel-card">
-        <div class="panel-card-title"><span>📍</span> Delivery Address <span style="font-size:0.7rem;color:var(--tx2);text-transform:none;font-weight:600;margin-left:4px;">Auto-fills at checkout</span></div>
+        <div class="panel-card-title"><span>📍</span> Delivery Address <span class="panel-inline-note">Auto-fills at checkout</span></div>
         <div id="pfAddrStatus" style="font-size:0.78rem;margin-bottom:10px;padding:7px 10px;border-radius:7px;display:none"></div>
         <div class="panel-fields-grid">
           <div class="fg"><label>House No. / Street *</label><input type="text" id="pf-addr-street" placeholder="e.g. 12 Rizal St."/></div>
@@ -7408,7 +8091,7 @@ img {
           <div class="fg"><label>City / Municipality *</label><input type="text" id="pf-addr-city" placeholder="e.g. Davao City"/></div>
           <div class="fg"><label>Province / Region *</label><input type="text" id="pf-addr-province" placeholder="e.g. Davao del Sur"/></div>
         </div>
-        <div class="fg" style="max-width:180px"><label>Postal Code</label><input type="text" id="pf-addr-postal" placeholder="e.g. 8000" maxlength="6"/></div>
+        <div class="fg panel-narrow-sm"><label>Postal Code</label><input type="text" id="pf-addr-postal" placeholder="e.g. 8000" maxlength="6"/></div>
         <input type="hidden" id="pf-addr-id" value=""/>
         <button class="save-btn" onclick="saveAddress()"><i class="fas fa-map-pin" style="margin-right:6px"></i>Save Address</button>
       </div>
@@ -7419,15 +8102,15 @@ img {
           <div class="fg"><label data-i18n="current_pass">Current Password</label><input type="password" id="pf-curpass" placeholder="••••••••"/></div>
           <div class="fg"><label data-i18n="new_pass">New Password</label><input type="password" id="pf-newpass" placeholder="••••••••"/></div>
         </div>
-        <div class="fg" style="max-width:300px"><label data-i18n="confirm_pass">Confirm New Password</label><input type="password" id="pf-confirmpass" placeholder="••••••••"/></div>
+        <div class="fg panel-narrow"><label data-i18n="confirm_pass">Confirm New Password</label><input type="password" id="pf-confirmpass" placeholder="••••••••"/></div>
         <button class="save-btn" onclick="changePassword()" data-i18n="update_password">Update Password</button>
       </div>
     </div>
     <!-- ORDERS TAB -->
     <div class="panel-tab-content" id="tab-orders">
-      <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0 4px;">
-        <span style="font-size:0.8rem;color:var(--tx2);">Tap an order to see details</span>
-        <button onclick="renderOrders()" style="background:var(--bg4);border:1.5px solid var(--bd);border-radius:20px;padding:4px 12px;font-size:0.75rem;font-weight:800;color:var(--or);cursor:pointer;display:flex;align-items:center;gap:5px;"><i class="fas fa-sync-alt"></i> Refresh</button>
+      <div class="panel-tab-head">
+        <span class="panel-tab-note">Tap an order to see details</span>
+        <button onclick="renderOrders()" class="panel-refresh-btn"><i class="fas fa-sync-alt"></i> Refresh</button>
       </div>
       <div id="ordersContainer"></div>
     </div>
@@ -7472,18 +8155,18 @@ img {
         </div>
         <div class="fg">
           <label style="font-size:0.8rem;font-weight:700;color:var(--tx2);margin-bottom:6px;display:block">Subject</label>
-          <input type="text" id="complaint-subject" placeholder="e.g. Order issue, Service request..." style="width:100%;background:var(--bg4);border:1.5px solid var(--bd);border-radius:8px;padding:10px 14px;color:var(--tx);font-size:0.88rem;outline:none;font-family:'Nunito',sans-serif;" onfocus="this.style.borderColor='var(--or)'" onblur="this.style.borderColor='var(--bd)'"/>
+          <input type="text" id="complaint-subject" class="complaint-input" placeholder="e.g. Order issue, Service request..."/>
         </div>
         <div class="fg" style="margin-top:10px">
           <label style="font-size:0.8rem;font-weight:700;color:var(--tx2);margin-bottom:6px;display:block">Message</label>
-          <textarea id="complaint-message" rows="4" placeholder="Describe your concern in detail..." style="width:100%;background:var(--bg4);border:1.5px solid var(--bd);border-radius:8px;padding:10px 14px;color:var(--tx);font-size:0.88rem;outline:none;font-family:'Nunito',sans-serif;resize:vertical;min-height:90px" onfocus="this.style.borderColor='var(--or)'" onblur="this.style.borderColor='var(--bd)'"></textarea>
+          <textarea id="complaint-message" class="complaint-textarea" rows="4" placeholder="Describe your concern in detail..."></textarea>
         </div>
         <div id="complaint-err" style="font-size:0.8rem;color:#ef4444;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:6px;padding:8px 12px;margin-bottom:8px;display:none"></div>
-        <button onclick="submitComplaint()" style="width:100%;background:var(--or);color:#fff;border:none;border-radius:8px;padding:11px;font-weight:900;font-size:0.88rem;cursor:pointer;font-family:'Nunito',sans-serif;display:flex;align-items:center;justify-content:center;gap:7px;transition:background 0.2s" onmouseover="this.style.background='var(--or2)'" onmouseout="this.style.background='var(--or)'">
+        <button id="complaint-submit-btn" onclick="submitComplaint()" style="width:100%;background:var(--or);color:#fff;border:none;border-radius:8px;padding:11px;font-weight:900;font-size:0.88rem;cursor:pointer;font-family:'Nunito',sans-serif;display:flex;align-items:center;justify-content:center;gap:7px;transition:background 0.2s" onmouseover="this.style.background='var(--or2)'" onmouseout="this.style.background='var(--or)'">
           <i class="fas fa-paper-plane"></i> Submit
         </button>
       </div>
-      <div style="font-size:0.8rem;font-weight:900;color:var(--tx2);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">My Submissions</div>
+      <div class="complaints-title">My Submissions</div>
       <div id="complaintsList"></div>
     </div>
     </div><!-- /panel-main-content -->
@@ -10302,7 +10985,7 @@ async function submitLogin(){
   try{
     const response=await fetch('/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password:pass})});
     const data=await response.json();
-    if(data.success){saveUser({id:data.user.id,name:data.user.name,email:data.user.email,phone:data.user.phone_number||'',token:data.token,role:data.user.role});if(data.user.role==='admin'){window.location.href='/admin.html';return;}closeAuth();updateNavAuth();showToast(`Welcome back, ${getUser().name}! 🏍️`);loadCustomerNotifications();startNotifPolling();loadAddressCache();} 
+    if(data.success){saveUser({id:data.user.id,name:data.user.name,email:data.user.email,phone:data.user.phone_number||'',token:data.token,role:data.user.role});if(data.user.role==='admin'){window.location.href='/admin.html';return;}closeAuth();updateNavAuth();showToast(`Welcome back, ${getUser().name}! 🏍️`);loadCustomerNotifications();startNotifPolling();loadAddressCache();loadCart();} 
     else{errEl.textContent=data.message||'Login failed';errEl.classList.add('show');if(btn){btn.disabled=false;btn.textContent='Login';}}
   }catch(e){
     const users=getUsers();const found=users.find(u=>u.email===email&&u.password===pass);
@@ -12345,16 +13028,33 @@ function selectCType(type){
   ['complaint','request','feedback'].forEach(t=>{const btn=document.getElementById('ctype-'+t);if(btn)btn.className='ctype-btn'+(t===type?' active-'+t:'');});
 }
 
-function submitComplaint(){
+async function submitComplaint(){
   const user=getUser();if(!user){openAuth('login');return;}
   const subject=document.getElementById('complaint-subject').value.trim();const message=document.getElementById('complaint-message').value.trim();
   const errEl=document.getElementById('complaint-err');errEl.style.display='none';
   if(!subject){errEl.textContent='⚠️ Please enter a subject.';errEl.style.display='block';return;}
   if(!message){errEl.textContent='⚠️ Please write your message.';errEl.style.display='block';return;}
-  const newComplaint={id:Date.now(),type:selectedCType,subject,message,status:'open',date:new Date().toLocaleDateString('en-PH',{year:'numeric',month:'short',day:'numeric'}),userId:user.id};
-  complaints.unshift(newComplaint);localStorage.setItem('mf_complaints',JSON.stringify(complaints));
-  fetch('/api/complaints/submit',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+(user.token||'')},body:JSON.stringify(newComplaint)}).catch(()=>{});
-  document.getElementById('complaint-subject').value='';document.getElementById('complaint-message').value='';selectCType('complaint');renderComplaintsList();showToast('✅ Submitted! We\'ll respond soon.');
+  const submitBtn=document.getElementById('complaint-submit-btn');
+  if(submitBtn){submitBtn.disabled=true;submitBtn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Submitting...';}
+  try{
+    const res=await fetch('/api/complaints/submit',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+(user.token||'')},
+      body:JSON.stringify({type:selectedCType,subject,message})
+    });
+    const data=await res.json();
+    if(data.success){
+      document.getElementById('complaint-subject').value='';document.getElementById('complaint-message').value='';selectCType('complaint');
+      await fetchAndRenderComplaints(); // pulls the real record (with real ID) so replying works right away
+      showToast('✅ Submitted! We\'ll respond soon.');
+    } else {
+      errEl.textContent='⚠️ '+(data.message||'Failed to submit. Please try again.');errEl.style.display='block';
+    }
+  }catch(e){
+    errEl.textContent='⚠️ Network error — please check your connection and try again.';errEl.style.display='block';
+  }finally{
+    if(submitBtn){submitBtn.disabled=false;submitBtn.innerHTML='<i class="fas fa-paper-plane"></i> Submit';}
+  }
 }
 
 // Fetch latest complaints/messages + admin replies from server, then render.
@@ -12372,7 +13072,8 @@ async function fetchAndRenderComplaints(){
         id:c.id, type:(c.type||'Complaint').toLowerCase(), subject:c.subject, message:c.message,
         status:c.status, adminResponse:c.admin_response||'', resolvedAt:c.resolved_at,
         date:c.created_at?new Date(c.created_at).toLocaleDateString('en-PH',{year:'numeric',month:'short',day:'numeric'}):'',
-        userId:user.id, fromServer:true
+        userId:user.id, fromServer:true,
+        messages: Array.isArray(c.messages) ? c.messages : []
       }));
     }
   }catch(e){ /* fall back to local cache below if server fetch fails */ }
@@ -12382,25 +13083,72 @@ async function fetchAndRenderComplaints(){
 function renderComplaintsList(){
   const el=document.getElementById('complaintsList');if(!el)return;
   const user=getUser();
-  // Prefer server data (has admin replies); fall back to local-only submissions not yet confirmed by server
+  // Prefer server data (has the full message thread); fall back to local-only submissions not yet confirmed by server
   const source = (typeof serverComplaints!=='undefined' && serverComplaints.length) ? serverComplaints : (user?complaints.filter(c=>c.userId===user.id):[]);
   if(!source.length){el.innerHTML='<div class="empty-panel"><i class="fas fa-inbox" style="font-size:2rem;color:var(--bd)"></i><p style="margin-top:8px;color:var(--tx2);font-size:0.85rem">No submissions yet</p></div>';return;}
   const typeLabels={complaint:'🚨 Complaint',request:'📋 Request',feedback:'💬 Feedback'};const statusLabels={open:'⏳ Open',reviewing:'🔍 Reviewing',resolved:'✅ Resolved'};
   el.innerHTML=source.map(c=>{
-    const reply=c.adminResponse||c.admin_response;
-    const replyHtml = reply ? `
-      <div style="margin-top:10px;padding:10px 12px;background:var(--bg2);border-left:3px solid var(--or);border-radius:8px;">
-        <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
-          <i class="fas fa-user-shield" style="color:var(--or);font-size:11px;"></i>
-          <span style="font-size:11px;font-weight:800;color:var(--or);">Admin replied${c.resolvedAt?' · '+new Date(c.resolvedAt).toLocaleDateString('en-PH',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}):''}</span>
-        </div>
-        <p style="margin:0;font-size:0.83rem;color:var(--tx);line-height:1.4;">${reply}</p>
-      </div>` : `<div style="margin-top:8px;font-size:0.78rem;color:var(--tx2);"><i class="fas fa-hourglass-half"></i> Waiting for admin response...</div>`;
-    return `<div class="complaint-card"><div class="complaint-card-head"><span class="complaint-type ${c.type}">${typeLabels[c.type]||c.type}</span><span class="complaint-status cstatus-${c.status}">${statusLabels[c.status]||c.status}</span></div><div style="font-size:0.85rem;font-weight:800;color:var(--tx);margin-bottom:4px">${c.subject||''}</div><div class="complaint-msg">${c.message}</div>${replyHtml}<div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;"><span class="complaint-date"><i class="fas fa-calendar-alt"></i> ${c.date}</span>${c.fromServer?'':`<button onclick="deleteComplaint(${c.id})" style="background:none;border:none;color:#e44;font-size:0.78rem;cursor:pointer;font-family:'Nunito',sans-serif;"><i class="fas fa-trash"></i></button>`}</div></div>`;
+    // Full back-and-forth conversation thread for this submission (customer + admin messages, in order)
+    let threadHtml = '';
+    if(c.messages && c.messages.length){
+      threadHtml = '<div style="margin-top:10px;display:flex;flex-direction:column;gap:8px;">' + c.messages.map(m=>{
+        const isAdmin = m.sender_role==='admin';
+        const when = m.created_at ? new Date(m.created_at).toLocaleString('en-PH',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}) : '';
+        return `<div style="padding:9px 12px;border-radius:8px;background:${isAdmin?'var(--bg2)':'rgba(232,64,12,0.06)'};border-left:3px solid ${isAdmin?'var(--or)':'#999'};">
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;">
+            <i class="fas ${isAdmin?'fa-user-shield':'fa-user'}" style="color:${isAdmin?'var(--or)':'var(--tx2)'};font-size:11px;"></i>
+            <span style="font-size:11px;font-weight:800;color:${isAdmin?'var(--or)':'var(--tx2)'};">${isAdmin?'Admin · MotoFix':'You'}${when?' · '+when:''}</span>
+          </div>
+          <p style="margin:0;font-size:0.83rem;color:var(--tx);line-height:1.4;">${m.message}</p>
+        </div>`;
+      }).join('') + '</div>';
+    } else {
+      threadHtml = `<div class="complaint-msg">${c.message}</div><div style="margin-top:8px;font-size:0.78rem;color:var(--tx2);"><i class="fas fa-hourglass-half"></i> Waiting for admin response...</div>`;
+    }
+    const replyBox = c.fromServer ? `
+      <div style="display:flex;gap:6px;margin-top:10px;">
+        <input type="text" id="cReply-${c.id}" placeholder="Type a follow-up message..." style="flex:1;padding:8px 10px;border-radius:8px;border:1.5px solid var(--bd,#ddd);font-size:0.8rem;background:var(--bg);color:var(--tx);" onkeydown="if(event.key==='Enter'){event.preventDefault();sendComplaintReply(${c.id});}"/>
+        <button onclick="sendComplaintReply(${c.id})" style="padding:8px 14px;border-radius:8px;border:none;background:var(--or);color:#fff;font-size:0.78rem;font-weight:700;cursor:pointer;"><i class="fas fa-paper-plane"></i></button>
+      </div>` : '';
+    return `<div class="complaint-card"><div class="complaint-card-head"><span class="complaint-type ${c.type}">${typeLabels[c.type]||c.type}</span><span class="complaint-status cstatus-${c.status}">${statusLabels[c.status]||c.status}</span></div><div style="font-size:0.85rem;font-weight:800;color:var(--tx);margin-bottom:4px">${c.subject||''}</div>${threadHtml}${replyBox}<div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;"><span class="complaint-date"><i class="fas fa-calendar-alt"></i> ${c.date}</span><button onclick="deleteComplaint(${c.id},${!!c.fromServer})" style="background:none;border:none;color:#e44;font-size:0.78rem;cursor:pointer;font-family:'Nunito',sans-serif;"><i class="fas fa-trash"></i></button></div></div>`;
   }).join('');
 }
 
-function deleteComplaint(id){if(!confirm('Remove this submission?'))return;complaints=complaints.filter(c=>c.id!==id);localStorage.setItem('mf_complaints',JSON.stringify(complaints));renderComplaintsList();showToast('🗑️ Removed');}
+async function sendComplaintReply(id){
+  const input=document.getElementById('cReply-'+id);
+  if(!input)return;
+  const msg=input.value.trim();
+  if(!msg)return;
+  const user=getUser();if(!user)return;
+  input.disabled=true;
+  try{
+    const res=await fetch('/api/complaints/'+id+'/reply',{
+      method:'POST',
+      headers:{'Content-Type':'application/json',Authorization:'Bearer '+user.token},
+      body:JSON.stringify({message:msg})
+    });
+    const data=await res.json();
+    if(data.success){ input.value=''; showToast('✅ Message sent'); await fetchAndRenderComplaints(); }
+    else showToast('❌ '+(data.message||'Failed to send'));
+  }catch(e){ showToast('❌ Network error'); }
+  finally{ if(input) input.disabled=false; }
+}
+
+async function deleteComplaint(id, fromServer){
+  if(!confirm('Remove this submission?'))return;
+  if(fromServer){
+    const user=getUser();if(!user)return;
+    try{
+      const res=await fetch('/api/complaints/'+id,{method:'DELETE',headers:{Authorization:'Bearer '+user.token}});
+      const data=await res.json();
+      if(data.success){ await fetchAndRenderComplaints(); showToast('🗑️ Removed'); }
+      else showToast('❌ '+(data.message||'Failed to remove'));
+    }catch(e){ showToast('❌ Network error'); }
+    return;
+  }
+  complaints=complaints.filter(c=>c.id!==id);localStorage.setItem('mf_complaints',JSON.stringify(complaints));renderComplaintsList();showToast('🗑️ Removed');
+}
+
 
 // Stub to avoid reference errors from cart checkout button
 function showEditCartModal(){ openCartCheckout(); }
@@ -12984,55 +13732,67 @@ async function _doConfirmCartOrder(gpsResult){
 </script>
 
 <!-- FORGOT PASSWORD MODAL -->
-<div id="forgotModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:9999;align-items:center;justify-content:center;padding:20px;">
-  <div style="background:var(--bg2);border:1.5px solid var(--bd);border-radius:16px;padding:32px 28px;width:100%;max-width:400px;position:relative;">
-    <button onclick="closeForgotModal()" style="position:absolute;top:14px;right:16px;background:none;border:none;color:var(--mut);font-size:20px;cursor:pointer;">&#x2715;</button>
+<div id="forgotModal" class="forgot-modal">
+  <div class="forgot-card">
+    <button onclick="closeForgotModal()" class="forgot-close"><i class="fas fa-times"></i></button>
 
     <!-- Step 1: Enter Email -->
     <div id="forgotStep1">
-      <h3 style="font-size:18px;font-weight:900;margin-bottom:6px;">Forgot Password?</h3>
-      <p style="color:var(--mut);font-size:13px;margin-bottom:20px;">Enter your email address to reset your password.</p>
-      <div style="margin-bottom:14px;">
-        <label style="font-size:13px;font-weight:600;color:var(--mut);display:block;margin-bottom:6px;">Email Address</label>
-        <input type="email" id="forgotEmailInput" placeholder="your@email.com"
-          onkeydown="if(event.key==='Enter')verifyForgotEmail()"
-          style="width:100%;padding:11px 14px;background:var(--bg3);border:1.5px solid var(--bd);border-radius:8px;color:var(--tx);font-size:14px;outline:none;box-sizing:border-box;"/>
+      <div class="forgot-head">
+        <div class="forgot-head-icon"><i class="fas fa-key"></i></div>
+        <div>
+          <h3 class="forgot-title">Forgot Password?</h3>
+          <p class="forgot-sub">Enter your email address to reset your password.</p>
+        </div>
       </div>
-      <div id="forgotErrMsg" style="display:none;color:#ef4444;font-size:12px;margin-bottom:10px;padding:8px 12px;background:rgba(239,68,68,0.1);border-radius:6px;"></div>
-      <button onclick="verifyForgotEmail()" id="forgotSendBtn"
-        style="width:100%;padding:12px;background:var(--or);color:#fff;border:none;border-radius:9px;font-weight:900;font-size:14px;cursor:pointer;">
+      <div class="forgot-field">
+        <label>Email Address</label>
+        <div class="forgot-input-wrap">
+          <i class="fas fa-envelope"></i>
+          <input type="email" id="forgotEmailInput" placeholder="your@email.com" onkeydown="if(event.key==='Enter')verifyForgotEmail()"/>
+        </div>
+      </div>
+      <div id="forgotErrMsg" class="forgot-err"></div>
+      <button onclick="verifyForgotEmail()" id="forgotSendBtn" class="forgot-btn">
         Continue
       </button>
     </div>
 
     <!-- Step 2: Set New Password -->
     <div id="forgotStep2" style="display:none;">
-      <h3 style="font-size:18px;font-weight:900;margin-bottom:6px;">Set New Password</h3>
-      <p style="color:var(--mut);font-size:13px;margin-bottom:20px;">Hi <span id="forgotUserName" style="color:var(--or);font-weight:700;"></span>! Enter your new password.</p>
-      <div style="margin-bottom:14px;">
-        <label style="font-size:13px;font-weight:600;color:var(--mut);display:block;margin-bottom:6px;">New Password</label>
-        <input type="password" id="forgotNewPass" placeholder="At least 6 characters"
-          style="width:100%;padding:11px 14px;background:var(--bg3);border:1.5px solid var(--bd);border-radius:8px;color:var(--tx);font-size:14px;outline:none;box-sizing:border-box;"/>
+      <div class="forgot-head">
+        <div class="forgot-head-icon"><i class="fas fa-lock"></i></div>
+        <div>
+          <h3 class="forgot-title">Set New Password</h3>
+          <p class="forgot-sub">Hi <span id="forgotUserName" class="forgot-user"></span>! Enter your new password.</p>
+        </div>
       </div>
-      <div style="margin-bottom:14px;">
-        <label style="font-size:13px;font-weight:600;color:var(--mut);display:block;margin-bottom:6px;">Confirm Password</label>
-        <input type="password" id="forgotConfPass" placeholder="Repeat your password"
-          onkeydown="if(event.key==='Enter')doForgotReset()"
-          style="width:100%;padding:11px 14px;background:var(--bg3);border:1.5px solid var(--bd);border-radius:8px;color:var(--tx);font-size:14px;outline:none;box-sizing:border-box;"/>
+      <div class="forgot-field">
+        <label>New Password</label>
+        <div class="forgot-input-wrap">
+          <i class="fas fa-key"></i>
+          <input type="password" id="forgotNewPass" placeholder="At least 6 characters"/>
+        </div>
       </div>
-      <div id="forgotResetErr" style="display:none;color:#ef4444;font-size:12px;margin-bottom:10px;padding:8px 12px;background:rgba(239,68,68,0.1);border-radius:6px;"></div>
-      <button onclick="doForgotReset()" id="forgotResetBtn"
-        style="width:100%;padding:12px;background:var(--or);color:#fff;border:none;border-radius:9px;font-weight:900;font-size:14px;cursor:pointer;">
+      <div class="forgot-field">
+        <label>Confirm Password</label>
+        <div class="forgot-input-wrap">
+          <i class="fas fa-shield-halved"></i>
+          <input type="password" id="forgotConfPass" placeholder="Repeat your password" onkeydown="if(event.key==='Enter')doForgotReset()"/>
+        </div>
+      </div>
+      <div id="forgotResetErr" class="forgot-err"></div>
+      <button onclick="doForgotReset()" id="forgotResetBtn" class="forgot-btn">
         Reset Password
       </button>
     </div>
 
     <!-- Step 3: Success -->
-    <div id="forgotStep3" style="display:none;text-align:center;">
-      <div style="font-size:48px;margin-bottom:16px;">&#x2705;</div>
-      <h3 style="font-size:18px;font-weight:900;margin-bottom:8px;">Password Changed!</h3>
-      <p style="color:var(--mut);font-size:13px;">Your password has been changed successfully.</p>
-      <button onclick="closeForgotModal();openAuth('login');" style="margin-top:20px;padding:10px 24px;background:var(--or);color:#fff;border:none;border-radius:8px;font-weight:800;cursor:pointer;">Login Now</button>
+    <div id="forgotStep3" class="forgot-success">
+      <div class="forgot-success-icon"><i class="fas fa-check"></i></div>
+      <h3 class="forgot-title">Password Changed!</h3>
+      <p class="forgot-sub">Your password has been changed successfully.</p>
+      <button onclick="closeForgotModal();openAuth('login');" class="forgot-login-btn">Login Now</button>
     </div>
   </div>
 </div>

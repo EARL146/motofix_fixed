@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MotoMarket Admin Login</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;background:#090b10;color:#f5f7fa;font-family:'DM Sans',sans-serif}.card{width:min(430px,92vw);padding:34px;border:1px solid #242a35;border-radius:22px;background:#11151d;box-shadow:0 24px 70px rgba(0,0,0,.45)}.brand{text-align:center;font-size:28px;font-weight:800;margin-bottom:8px}.badge{display:block;width:max-content;margin:0 auto 18px;padding:5px 10px;border-radius:999px;background:#2b1708;color:#ff9d4d;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.sub{text-align:center;color:#9aa3b2;font-size:14px;margin-bottom:24px}.google{display:flex;justify-content:center;min-height:44px}.divider{display:flex;align-items:center;gap:10px;margin:20px 0;color:#697384;font-size:12px}.divider:before,.divider:after{content:'';height:1px;flex:1;background:#29303b}.field{margin-bottom:12px}.field label{display:block;font-size:12px;color:#9aa3b2;margin-bottom:6px}.field input{width:100%;padding:12px 13px;border-radius:10px;border:1px solid #303846;background:#0b0e14;color:#fff;outline:none}.btn{width:100%;padding:12px;border:0;border-radius:10px;background:#f97316;color:#fff;font-weight:800;cursor:pointer}.error{display:none;margin-top:14px;padding:10px;border-radius:9px;background:#3a1212;color:#ff8f8f;font-size:12px}.back{display:block;text-align:center;margin-top:18px;color:#9aa3b2;text-decoration:none;font-size:12px}.back:hover{color:#fff}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="brand">MotoMarket</div>
+  <span class="badge">Admin Secure Access</span>
+  <div class="sub">Only the two authorized MotoFix administrator accounts can access the dashboard.</div>
+  <div id="googleButton" class="google"></div>
+  <div class="divider">OR</div>
+  <form id="adminForm">
+    <div class="field"><label>Email</label><input id="email" type="email" autocomplete="username" required></div>
+    <div class="field"><label>Password</label><input id="password" type="password" autocomplete="current-password" required></div>
+    <button class="btn" type="submit">Admin Login</button>
+  </form>
+  <div id="error" class="error"></div>
+  <a class="back" href="/">← Back to MotoMarket</a>
+</div>
+<script>
+const errorEl=document.getElementById('error');
+function showError(m){errorEl.textContent=m;errorEl.style.display='block';}
+function saveAdmin(data){
+  const u={id:data.user.id,name:data.user.name,email:data.user.email,phone:data.user.phone_number||'',token:data.token,role:data.user.role};
+  localStorage.setItem('mf_user',JSON.stringify(u));
+  localStorage.setItem('sessionToken',data.token);
+  window.location.href='/admin.html';
+}
+async function handleGoogle(response){
+  try{
+    const r=await fetch('/api/auth/google?mode=admin',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({credential:response.credential})});
+    const d=await r.json();
+    if(!r.ok||!d.success) throw new Error(d.message||'Admin login failed.');
+    const ADMIN_EMAILS=['admin@gmail.com','earlypajo050775@gmail.com'];
+    if(d.user.role!=='admin'||!ADMIN_EMAILS.includes(d.user.email.toLowerCase().trim())) throw new Error('Admin access denied.');
+    saveAdmin(d);
+  }catch(e){showError(e.message||'Admin login failed.');}
+}
+async function initGoogle(){
+  try{
+    const r=await fetch('/api/auth/google/config'); const d=await r.json();
+    if(!d.clientId) return showError('Google Sign-In is not configured.');
+    google.accounts.id.initialize({client_id:d.clientId,callback:handleGoogle,auto_select:false,cancel_on_tap_outside:true});
+    google.accounts.id.renderButton(document.getElementById('googleButton'),{type:'standard',theme:'outline',size:'large',text:'signin_with',shape:'rectangular',logo_alignment:'left',width:320});
+  }catch(e){showError('Unable to load Google Sign-In.');}
+}
+document.getElementById('adminForm').addEventListener('submit',async e=>{
+  e.preventDefault(); errorEl.style.display='none';
+  try{
+    const email=document.getElementById('email').value.trim().toLowerCase();
+    const password=document.getElementById('password').value;
+    const ADMIN_EMAILS=['admin@gmail.com','earlypajo050775@gmail.com'];
+    if(!ADMIN_EMAILS.includes(email)){showError('Admin access denied. Use an authorized admin email.');return;}
+    const r=await fetch('/api/auth/login?mode=admin',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password:document.getElementById('password').value})});
+    const d=await r.json();
+    if(!r.ok||!d.success) throw new Error(d.message||'Admin login failed.');
+    saveAdmin(d);
+  }catch(e){showError(e.message||'Admin login failed.');}
+});
+</script>
+<script src="https://accounts.google.com/gsi/client" async defer onload="initGoogle()"></script>
+</body>
+</html>
